@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Loginform from "../Componets/LoginFrom";
 
 import { AppBar, Box, Grid, Typography, Paper } from "@mui/material";
 import Appbar from "../Componets/AppBar";
+import Sidebar from "../Componets/SideBar";
 
 const LoginPage = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
   return (
     <Box sx={{}}>
       <Grid container spacing={3} alignItems="center" justifyContent="center">
         <Grid item xs={12}>
-          <Appbar />
+          <Appbar handleDrawerToggle={handleDrawerToggle} />
+          <Sidebar
+            mobileOpen={mobileOpen}
+            handleDrawerToggle={handleDrawerToggle}
+          />
         </Grid>
 
         <Grid item xs={12} justifyContent="center">

@@ -21,17 +21,14 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
         {/*         <ListItem button component={Link} to="/login">
           <ListItemText primary="Login" />
         </ListItem> */}
-        <ListItem button component={Link} to="/register">
+        <ListItem button component={Link} to="/">
+          <ListItemText primary="Inicio" />
+        </ListItem>
+        <ListItem button component={Link} to="/login">
+          <ListItemText primary="Iniciar Sesión" />
+        </ListItem>
+        <ListItem button component={Link} to="/registrar">
           <ListItemText primary="Registrar Usuario" />
-        </ListItem>
-        <ListItem button component={Link} to="/fraccRegister">
-          <ListItemText primary="Registrar Fraccionamiento" />
-        </ListItem>
-        <ListItem button component={Link} to="/map">
-          <ListItemText primary="Ver mapa" />
-        </ListItem>
-        <ListItem button component={Link} to="/servicios">
-          <ListItemText primary="Servicios" />
         </ListItem>
       </List>
     </div>
