@@ -1,25 +1,31 @@
 import React from "react";
 import RegisterFrom from "../Componets/RegisterFrom";
-import { Box } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import Appbar from "../Componets/AppBar";
 
-const RegisterPage = () =>{
-    return (
-      
+const RegisterPage = () => {
+  return (
+    <Box sx={{}}>
+      <Grid container spacing={3} alignItems="center" justifyContent="center">
+        <Grid item xs={12}>
+          <Appbar />
+        </Grid>
 
-
-        <Box sx={{display:"flex"}}>
-            <h2>Registar usuario</h2>
-            <Box component="main" sx= {{flexgrow: 1, p: 3 }}>
-                <RegisterFrom/>
-
-                <Appbar/>
-
-            </Box>
-          
-
-        </Box>
-    )
-
+        <Grid item xs={12} justifyContent="center">
+          <Typography variant="h6" sx={{ textAlign: "center" }}>
+            Bienvenido a Learning Management System
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sx={{}} alignItems="center" justifyContent="center">
+          <Paper sx={{ p: 4, m: 4 }}>
+            <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
+              Registar usuario
+            </Typography>
+            <RegisterFrom />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 };
 export default RegisterPage;
