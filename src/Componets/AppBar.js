@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Appbar = ({ handleDrawerToggle }) => {
   const navigate = useNavigate();
   return (
-    <AppBar position="static" sx={{ p: 0 }}>
+    <AppBar position="sticky" sx={{ p: 0 }}>
       <Toolbar sx={{ p: 0 }}>
         <IconButton
           color="inherit"

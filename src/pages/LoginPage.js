@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Loginform from "../Componets/LoginFrom";
+import Loginform from "../Componets/LoginForm";
 
 import { AppBar, Box, Grid, Typography, Paper } from "@mui/material";
 import Appbar from "../Componets/AppBar";
@@ -12,22 +12,30 @@ const LoginPage = () => {
   };
   return (
     <Box sx={{}}>
-      <Grid container spacing={3} alignItems="center" justifyContent="center">
-        <Grid item xs={12}>
+      <Grid container spacing={2} alignItems="center" justifyContent="center">
+        {/* <Grid item xs={12}>
           <Appbar handleDrawerToggle={handleDrawerToggle} />
           <Sidebar
             mobileOpen={mobileOpen}
             handleDrawerToggle={handleDrawerToggle}
           />
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12} justifyContent="center">
           <Typography variant="h6" sx={{ textAlign: "center" }}>
             Bienvenido a Learning Management System
           </Typography>
         </Grid>
-        <Grid item xs={12} sx={{}} alignItems="center" justifyContent="center">
-          <Paper sx={{ p: 4, m: 4 }}>
+        <Grid
+          item
+          xs={12}
+          sm={9}
+          md={6}
+          sx={{}}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Paper sx={{ p: 4, mx: 4 }}>
             <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
               Iniciar Sesión{" "}
             </Typography>

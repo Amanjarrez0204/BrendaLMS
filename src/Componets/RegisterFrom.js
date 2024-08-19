@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TextField, Button, Box } from "@mui/material";
+import { TextField, Button, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const RegisterFrom = () => {
@@ -50,105 +50,111 @@ const RegisterFrom = () => {
   };
 
   return (
-    <Box component="form" sx={{ mt: 1 }}>
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="nombre"
-        label="Nombre de usuario"
-        name="nombre"
-        autoComplete="nombre"
-        autoFocus
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="apellidos"
-        label="appelidos del usuario"
-        name="appelidos"
-        autoComplete="apellidos"
-        autoFocus
-        value={apellidos}
-        onChange={(e) => setApellidos(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="curp"
-        label="CURP del usuario"
-        name="curp"
-        autoComplete="curp"
-        autoFocus
-        value={curp}
-        onChange={(e) => setCurp(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="cursos"
-        label="Curso deseado"
-        name="cursos"
-        autoComplete="cursos"
-        autoFocus
-        value={cursos}
-        onChange={(e) => setCursos(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="ciudad"
-        label="Nombre de la ciudad"
-        name="ciudad"
-        autoComplete="ciudad"
-        autoFocus
-        value={ciudad}
-        onChange={(e) => setCiudad(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="fechaIngreso"
-        label="fecha de inicio de curso"
-        name="fechaInfreso"
-        autoComplete="fechaIngreso"
-        autoFocus
-        // value={fechaIngreso}
-        value={fechaRegistro}
-        onChange={(e) => setFechaIngreso(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="correoElectronico"
-        label="Correo Electronico"
-        name="correoElectronico"
-        autoComplete="correoElectronico"
-        autoFocus
-        value={correoElectronico}
-        onChange={(e) => setCorreoElectronico(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="password"
-        label="contraseña"
-        name="contraseña"
-        autoComplete="contraseña"
-        autoFocus
-        value={password}
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+    <Box component="form" sx={{}}>
+      <Grid container spacing={2}>
+        <Grid item sx={12} md={6}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="nombre"
+            label="Nombre de usuario"
+            name="nombre"
+            autoComplete="nombre"
+            autoFocus
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="apellidos"
+            label="appelidos del usuario"
+            name="appelidos"
+            autoComplete="apellidos"
+            autoFocus
+            value={apellidos}
+            onChange={(e) => setApellidos(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="curp"
+            label="CURP del usuario"
+            name="curp"
+            autoComplete="curp"
+            autoFocus
+            value={curp}
+            onChange={(e) => setCurp(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="cursos"
+            label="Curso deseado"
+            name="cursos"
+            autoComplete="cursos"
+            autoFocus
+            value={cursos}
+            onChange={(e) => setCursos(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="ciudad"
+            label="Nombre de la ciudad"
+            name="ciudad"
+            autoComplete="ciudad"
+            autoFocus
+            value={ciudad}
+            onChange={(e) => setCiudad(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="fechaIngreso"
+            label="fecha de inicio de curso"
+            name="fechaInfreso"
+            autoComplete="fechaIngreso"
+            autoFocus
+            // value={fechaIngreso}
+            value={fechaRegistro}
+            onChange={(e) => setFechaIngreso(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="correoElectronico"
+            label="Correo Electronico"
+            name="correoElectronico"
+            autoComplete="correoElectronico"
+            autoFocus
+            value={correoElectronico}
+            onChange={(e) => setCorreoElectronico(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="contraseña"
+            name="contraseña"
+            autoComplete="contraseña"
+            autoFocus
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Grid>
+      </Grid>
       <Button
         fullWidth
         variant="contained"
