@@ -54,22 +54,138 @@ function BasicTabs() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Grid container spacing={2} >
+        
+        <Grid item sx={{  width: "100%", my:0, mx:{
+          xs: 2,
+          md: 0
+        } }}>
+          <Paper sx={{p:2}} >
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Perfíl" {...a11yProps(0)} />
           <Tab label="Como maestro" {...a11yProps(1)} />
           <Tab label="Como alumno" {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        Item One
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
+          </Paper>
+        </Grid>
+        
+          
+          
+          <Grid item sx={{  width:"100%", p:0,  my:0, mx:{
+              xs: 2,
+              md: 0
+            } }}>
+              
+
+                
+                <CustomTabPanel value={value} index={0} sx={{p:0}}>
+                  {/* <Grid container spacing={2}  > */}
+                 <Grid container xs={12}  sx={{}}>
+                    <Grid item sx={{p:0}} >
+                      <Paper sx={{p:2, display:"flex" }} >
+                        <Avatar sx={{width:100, height:100}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            
+                        <Box sx={{p:2}}>
+                          <Typography variant="h6" gutterBottom component="div">
+                            Item One a
+                          </Typography>
+                          <Typography variant="body1" gutterBottom>
+                            Item One
+                          </Typography>
+                        </Box>
+                    
+                      </Paper>  
+                    </Grid>
+                  </Grid>
+                  {/* </Grid>   */}
+                </CustomTabPanel>
+          
+             
+          
+          <CustomTabPanel value={value} index={1}>
+      
+            <Grid container spacing={2}>
+                    <Grid item>
+                      <Paper sx={{p:2, display:"flex" }} >
+                        <Avatar sx={{width:100, height:100}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            
+                        <Box sx={{p:2}}>
+                          <Typography variant="h6" gutterBottom component="div">
+                            Item One
+                          </Typography>
+                          <Typography variant="body1" gutterBottom>
+                            Item One
+                          </Typography>
+                        </Box>
+                    
+                      </Paper>  
+                    </Grid>
+                    <Grid item>
+                      <Paper sx={{p:2, display:"flex" }} >
+                        <Avatar sx={{width:100, height:100}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            
+                        <Box sx={{p:2}}>
+                          <Typography variant="h6" gutterBottom component="div">
+                            Item One
+                          </Typography>
+                          <Typography variant="body1" gutterBottom>
+                            Item One
+                          </Typography>
+                        </Box>
+                    
+                      </Paper>  
+                    </Grid>
+                  </Grid>  
+      
+          </CustomTabPanel>
+      
+      
       <CustomTabPanel value={value} index={2}>
-        Item Three
+      
+      <Grid container spacing={2}>
+                  <Grid item>
+                    <Paper sx={{p:2, display:"flex" }} >
+                      <Avatar sx={{width:100, height:100}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          
+                      <Box sx={{p:2}}>
+                        <Typography variant="h6" gutterBottom component="div">
+                          Item One
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                          Item One
+                        </Typography>
+                      </Box>
+                  
+                    </Paper>  
+                  </Grid>
+                  <Grid item>
+                    <Paper sx={{p:2, display:"flex" }} >
+                      <Avatar sx={{width:100, height:100}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          
+                      <Box sx={{p:2}}>
+                        <Typography variant="h6" gutterBottom component="div">
+                          Item One
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                          Item One
+                        </Typography>
+                      </Box>
+                  
+                    </Paper>  
+                  </Grid>
+                </Grid>  
+      
       </CustomTabPanel>
+            
+        </Grid>
+      </Grid>
+      
+          
+  
+      
+      
     </Box>
   );
 }
@@ -180,11 +296,11 @@ const Dashboard = () => {
                   display: "grid",
                   flexWrap:"wrap",
                   justifyContent: {
-                    xs: "center", // Center on extra-small screens
-                    sm: "start", // Align to the left on small screens and up
+                    xs: "center",
+                    sm: "start",
                     md: "center"
                   },
-                  // alignItems: "center",
+                  
                 }}
                 >
                   <Button variant="contained" color="primary" sx={{margin: 2}}>
@@ -199,37 +315,8 @@ const Dashboard = () => {
           xs: 0,
         md: 2
       }}}>
- 
-      <Grid container spacing={2} >
-        
-        <Grid item sx={{  width: "100%", my:0, mx:{
-          xs: 2,
-          md: 0
-        } }}>
-          <Paper sx={{p:2}} >
-
-            <BasicTabs sx={{  }}/> 
-            
-          </Paper>
-        </Grid>
-        <Grid item>
-          <Paper sx={{p:2 }} >
-            <Avatar sx={{width:100, height:100}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-
-          </Paper>
-        </Grid>
-          
-            <ListItem  button  sx={{ m:{
-                xs: 2,
-                md: 0} }}
-              
-            >
-  
-              <Paper sx={{   }}>
-              <AlumnosList />
-              </Paper>
-            </ListItem>
-      </Grid>
+ <BasicTabs sx={{  }}/> 
+      
        
         
         </Grid>
