@@ -46,6 +46,18 @@ const CreateCourseForm = () => {
     }
   };
 
+// Secciones de la página de creación de cursos
+// // Informacion basica
+// // // Informacion adicional
+
+// // Detalles
+// // Contenido
+// // Evaluaciones
+// // Asignaciones
+// // Videoconferencias
+// // Ajustes
+
+
   return (
     <Box component="form" sx={{}}>
       <Grid container spacing={2}>
@@ -174,13 +186,7 @@ const CreateCourseForm = () => {
         sx={{ mt: 3, mb: 2 }}
         onClick={handleRegister}
         // Link to the courses creation page called crate-course
-        
-
-
-
-        
-
-      >
+>
         Crear nuevo curso
       </Button>
     </Box>

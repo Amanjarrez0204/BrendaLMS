@@ -26,21 +26,19 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import ImageIcon from "@mui/icons-material/Image";
 import AspectRatio from "@mui/joy/AspectRatio";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import ViewIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import ViewIcon from "@mui/icons-material/Visibility";
 
 // const options = [
 
-  
 //   ['ViewIcon', 'Ver Curso'],
 //   'Editar Curso',
 //   'Eliminar Curso',
@@ -48,17 +46,17 @@ import ViewIcon from '@mui/icons-material/Visibility';
 // ];
 const options = [
   {
-    icon: <ViewIcon sx={{ marginRight: 2, color: 'lightgray' }} />,
-    label: 'View Course'
+    icon: <ViewIcon sx={{ marginRight: 2, color: "lightgray" }} />,
+    label: "View Course",
   },
   {
-    icon: <EditIcon sx={{ marginRight: 2, color: 'lightgray' }} />,
-    label: 'Edit Course'
+    icon: <EditIcon sx={{ marginRight: 2, color: "lightgray" }} />,
+    label: "Edit Course",
   },
   {
-    icon: <DeleteIcon sx={{ marginRight: 2, color: 'lightgray' }} />,
-    label: 'Delete Course'
-  }
+    icon: <DeleteIcon sx={{ marginRight: 2, color: "lightgray" }} />,
+    label: "Delete Course",
+  },
 ];
 
 const ITEM_HEIGHT = 48;
@@ -78,8 +76,8 @@ function LongMenu() {
       <IconButton
         aria-label="more"
         id="long-button"
-        aria-controls={open ? 'long-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
+        aria-controls={open ? "long-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
       >
@@ -88,7 +86,7 @@ function LongMenu() {
       <Menu
         id="long-menu"
         MenuListProps={{
-          'aria-labelledby': 'long-button',
+          "aria-labelledby": "long-button",
         }}
         anchorEl={anchorEl}
         open={open}
@@ -96,16 +94,17 @@ function LongMenu() {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch',
+            width: "20ch",
           },
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-            
-            
+          <MenuItem
+            key={option}
+            selected={option === "Pyxis"}
+            onClick={handleClose}
+          >
             {option.icon} {option.label}
-        
           </MenuItem>
         ))}
       </Menu>
@@ -147,7 +146,6 @@ function BasicTabs() {
   const [value, setValue] = React.useState(1);
   const [cursos, setCursos] = useState([]); // Hook para manejar la lista de cursos
 
- 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -175,10 +173,9 @@ function BasicTabs() {
           xs: 0,
           md: 2,
         },
-        
       }}
     >
-      <Grid container spacing={2} direction={"column"} sx={{    }}>
+      <Grid container spacing={2} direction={"column"} sx={{}}>
         <Grid
           item
           sx={{
@@ -204,22 +201,24 @@ function BasicTabs() {
                   onClick={handleCursos}
                 />
                 <Tab label="Como alumno" {...a11yProps(2)} />
-                
-                
               </Tabs>
-              
             </Box>
-            <Box sx={{display: "flex", flex: "auto", alignItems: "center", justifyContent: "flex-end"}} >
-            <Button  
-            variant="contained"
-            color="primary"
-            
-            component={Link}
-            to="/create-course"
-          
+            <Box
+              sx={{
+                display: "flex",
+                flex: "auto",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
             >
+              <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/create-course"
+              >
                 + Crear curso
-                  </Button>
+              </Button>
             </Box>
           </Paper>
         </Grid>
@@ -313,77 +312,89 @@ function BasicTabs() {
               {/* Array de cursos */}
               {cursos.map((curso, index) => (
                 <Grid item>
-                  <Paper sx={{ p: 2, display: "flex",flexDirection: {
-                        xs: 'column-reverse',
-                        sm: 'row'
-                      } }}>
-                    <Box sx={{
-                      display: 'flex',
-                      alignItems: 'stretch',
-                      flex: 'auto',
-                      flexWrap:{
-                    
-                        xs: 'wrap',
-                        sm: 'nowrap'
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: {
+                        xs: "column-reverse",
+                        sm: "row",
                       },
-                      
-                    }}>
-                      <AspectRatio sx={{width: {xs:"100%", sm:200 }, mb:{
-                        xs: 2,
-                        sm: 0
-                      }}}>
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "stretch",
+                        flex: "auto",
+                        flexWrap: {
+                          xs: "wrap",
+                          sm: "nowrap",
+                        },
+                      }}
+                    >
+                      <AspectRatio
+                        sx={{
+                          width: { xs: "100%", sm: 200 },
+                          mb: {
+                            xs: 2,
+                            sm: 0,
+                          },
+                        }}
+                      >
                         <div>
                           <ImageIcon sx={{ fontSize: "3rem", opacity: 0.2 }} />
                         </div>
                       </AspectRatio>
-                      
-  
+
                       <Grid container sx={{ px: 2 }} direction={"column"}>
                         <Grid item sx={{ flex: "auto" }}>
-                          <Typography variant="h8" sx={{fontWeight: "Bold"}} gutterBottom component="div" >
+                          <Typography
+                            variant="h8"
+                            sx={{ fontWeight: "Bold" }}
+                            gutterBottom
+                            component="div"
+                          >
                             {curso.titulo}
                           </Typography>
                           <Typography variant="body2" gutterBottom>
                             {curso.descripcion}
                           </Typography>
-                        
-                        
                         </Grid>
-                        <Grid item sx={{flex:"auto"}}>
-                        <Divider />
-                          <Grid container sx={{fontSize: ".8em"}} columnSpacing={2}  >
-                            
-                            <Grid item   >
-                              Instructor: {curso.instructor}
+                        <Grid item sx={{ flex: "auto" }}>
+                          <Divider />
+                          <Grid
+                            container
+                            sx={{ fontSize: ".8em" }}
+                            columnSpacing={2}
+                          >
+                            <Grid item>Instructor: {curso.instructor}</Grid>
+                            <Grid item>
+                              Fecha de publicación:{" "}
+                              {new Date(
+                                curso.fecha_de_publicacion
+                              ).toLocaleDateString()}
                             </Grid>
-                            <Grid item >
-                              Fecha de publicación: {new Date(curso.fecha_de_publicacion).toLocaleDateString()}
-                            </Grid> 
-                            <Grid item
-                             >
-                              {curso.alumnos.length} Alumnos 
-                            </Grid>
-                            
+                            <Grid item>{curso.alumnos.length} Alumnos</Grid>
                           </Grid>
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box sx={{
-                      flex: 'unset',
-                      textAlignLast: 'end',
-                      mb:{
-                        xs: -5,
-                        sm: 0
-
-                      }
-}}>
+                    <Box
+                      sx={{
+                        flex: "unset",
+                        textAlignLast: "end",
+                        mb: {
+                          xs: -5,
+                          sm: 0,
+                        },
+                      }}
+                    >
                       <LongMenu />
                     </Box>
                   </Paper>
                 </Grid>
               ))}
-              
-              
             </Grid>
           </Box>
         </CustomTabPanel>
@@ -491,16 +502,17 @@ const Dashboard = () => {
                   p: 2,
                 }}
               >
-                <Box sx={{ p: 2,
-                      width: {
-                        
-                        md: 120,
-                      },
-                      height: {
-                        
-                        md: 120,
-                      },
-                    }}>
+                <Box
+                  sx={{
+                    p: 2,
+                    width: {
+                      md: 120,
+                    },
+                    height: {
+                      md: 120,
+                    },
+                  }}
+                >
                   <Avatar
                     sx={{
                       width: {
@@ -605,9 +617,7 @@ const Dashboard = () => {
           xs={12}
           sm={12}
           md={10}
-          
           sx={{
-            
             mt: {
               xs: 0,
               md: 2,
