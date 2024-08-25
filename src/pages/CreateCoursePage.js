@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import RegisterFrom from "../Componets/RegisterFrom";
-import CreateCourseForm from "../Componets/CreateCourseFrom";
+import CreateCourseForm from "../Componets/CreateCourseForm";
 
 import { AppBar, Box, Grid, Paper, Typography } from "@mui/material";
 import Appbar from "../Componets/AppBar";
 import Sidebar from "../Componets/SideBar";
+
+
+
+
+
 
 const CreateCoursePage = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -36,16 +41,13 @@ const CreateCoursePage = () => {
         <Grid
           item
           xs={12}
-          sm={9}
-          md={9}
+          md={10}
           sx={{}}
           alignItems="center"
           justifyContent="center"
         >
           <Paper sx={{ p: 4, mx: 4 }}>
-            <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
-              Registar usuario
-            </Typography>
+           
             <CreateCourseForm />
           </Paper>
         </Grid>

@@ -13,7 +13,7 @@ import alumnosList from "./Componets/AlumnosList";
 import Appbar from "./Componets/AppBar";
 import Sidebar from "./Componets/SideBar";
 import UserSideBar from "./Componets/UserSideBar";
-// import CreateCourseForm from "./Componets/CreateCourseFrom";
+// import CreateCourseForm from "./Componets/CreateCourseForm";
 import CreateCoursePage from "./pages/CreateCoursePage";
 
 function App() {
@@ -42,6 +42,7 @@ function App() {
                 mobileOpen={mobileOpen}
                 handleDrawerToggle={handleDrawerToggle}
               /> */}
+              
             </Grid>
 
             <Routes>
