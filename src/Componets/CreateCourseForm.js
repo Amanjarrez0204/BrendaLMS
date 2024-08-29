@@ -27,11 +27,20 @@ import { Textarea } from "@mui/joy";
 
 import { useEffect, useRef } from "react";
 // import {      } from '@mui/material';
+
+
+
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
+
+
+import JoditEditor from "jodit-react";
+// import "./styles.css";
+
 import { Label } from "@mui/icons-material";
 
 import Accordion from '@mui/material/Accordion';
@@ -39,6 +48,8 @@ import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+
 
 // Or if you only need the core build
 // import Quill from 'quill/core';
@@ -134,7 +145,12 @@ const SlateTExtEditorApp = () => {
   );
 };
 
-export default function AccordionUsage() {
+
+
+
+ 
+
+ function AccordionUsage() {
   return (
     <div>
       <Accordion>
@@ -439,6 +455,35 @@ function Detalles() {
   // }, []);
   //
 
+  const editor = useRef(null);
+  // const [descripcion, setDescripcion] = useState("Descripción del curso");
+  // const [instrucciones, setInstrucciones] = useState("Instrucciones del curso");
+
+  const [formValues, setFormValues] = useState({
+    descripcion: "Descripción del curso",
+    instrucciones: "Instrucciones del curso",
+    
+    objetivos: "Escribe un objetivo para el curso",
+    nivelDeInstruccion: "Introductorio",
+    requisitos: "Escribe un requisito para el curso",
+
+    // Add more fields as needed
+  });
+
+  const config = {
+    readonly: false,
+    height: 400
+  };
+  const handleUpdate = (event, field) => {
+    const editorContent = event
+    // setDescripcion(editorContent);
+    // setInstrucciones(editorContent);
+    setFormValues(prevValues => ({
+      ...prevValues,
+      [field]: editorContent
+    }));
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -450,7 +495,7 @@ function Detalles() {
         {/* <Typography variant="h6" sx={{}}>
           Descripción
         </Typography> */}
-        <ReactQuill
+        {/* <ReactQuill
           theme="snow"
           // value={CreateCourseForm.descripcion}
           required
@@ -461,7 +506,20 @@ function Detalles() {
           placeholder="Descripcion del curso"
           // onChange={(e) => CreateCourseForm.setDescripcion(e.target.value)}
           // onChange={(content, delta, source, editor) => CreateCourseForm.setDescripcion(editor.getText())}
-        />
+        /> */}
+        <JoditEditor
+        required
+        fullWidth
+        id="descripcion"
+        label="Descripción del curso"
+        name="descripcion"
+        placeholder="Descripcion del curso"
+        ref={editor}
+        config={config}
+        onBlur={(e) => handleUpdate(e, "descripcion")}
+        value={formValues.descripcion}
+            
+      />
         {/* <Box ref={editorRef} style={{ height: '200px' }}  /> */}
 
         {/* <QuillEditor /> */}
@@ -479,8 +537,9 @@ function Detalles() {
             label="Escribe un objetivo"
             name="objetivos"
             autoComplete="Escribe un objetivo"
-            value={CreateCourseForm.descripcion}
-            onChange={(e) => CreateCourseForm.setDescripcion(e.target.value)}
+            value={formValues.objetivos}
+            onChange={(e) => handleUpdate(e.target.value, "objetivos")}
+    // onBlur={(e) => handleUpdate(e.target.value, "objetivos")}
           />
 
           <Button
@@ -510,10 +569,13 @@ function Detalles() {
           <Select
             labelId="nivelDeInstruccion-label"
             id="nivelDeInstruccion"
-            value={CreateCourseForm.nivelDeInstruccion}
-            onChange={(e) =>
-              CreateCourseForm.setNivelDeInstruccion(e.target.value)
-            }
+            // value={CreateCourseForm.nivelDeInstruccion}
+            // onChange={(e) =>
+            //   CreateCourseForm.setNivelDeInstruccion(e.target.value)
+            // }
+            value={formValues.nivelDeInstruccion}
+            onChange={(e) => handleUpdate(e.target.value, "nivelDeInstruccion")}
+
             autoComplete="Nivel de instrucción"
           >
             {["Introductorio", "Intermedio", "Avanzado", "No aplica"].map(
@@ -537,8 +599,10 @@ function Detalles() {
             label="Escribe un requisito para el curso"
             name="requisitos"
             autoComplete="Escribe un requisito"
-            value={CreateCourseForm.requisito}
-            onChange={(e) => CreateCourseForm.setRequisito(e.target.value)}
+            // value={CreateCourseForm.requisito}
+            // onBlur={(e) => CreateCourseForm.setRequisito(e.target.value)}
+            value={formValues.requisitos}
+            onChange={(e) => handleUpdate(e.target.value, "requisitos")}
           />
 
           <Button
@@ -558,7 +622,7 @@ function Detalles() {
         </Box>
       </Grid>
       <Grid item xs={12}sx={{mt:1}}>
-      <ReactQuill
+      {/* <ReactQuill
           theme="snow"
           
           required
@@ -569,8 +633,25 @@ function Detalles() {
           placeholder="Instrucciones del curso"
           // onChange={(e) => CreateCourseForm.setDescripcion(e.target.value)}
           // onChange={(content, delta, source, editor) => CreateCourseForm.setDescripcion(editor.getText())}
-        />
+        /> */}
+        <JoditEditor
+        fullWidth
+        id="instrucciones"
+        label="Instrucciones del curso"
+        name="instrucciones"
+        placeholder="Instrucciones del curso"
+        ref={editor}
+        // value={instrucciones}
+        config={config}
+        // onBlur={handleUpdate}
+        // onChange={(e) => handleUpdate(e, "descripcion")}
+        onBlur={(e) => handleUpdate(e, "instrucciones")}
+        value={formValues.instrucciones}
+
+      />
+      {/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}
         </Grid>
+        
     </Grid>
   );
 }
@@ -622,6 +703,10 @@ function Contenido() {
     </Grid>
   );
 }
+
+
+
+
 
 const CreateCourseForm = () => {
   const [showSection, setShowSection] = useState(<InformacionBasica />);
@@ -688,6 +773,8 @@ const CreateCourseForm = () => {
       alert(`Error al registrar curso ${titulo}`);
     }
   };
+
+  
 
   return (
     <Box component="form" sx={{}}>
