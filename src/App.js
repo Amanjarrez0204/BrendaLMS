@@ -39,7 +39,7 @@ function App() {
                 mobileOpen={mobileOpen}
                 handleDrawerToggle={handleDrawerToggle}
               />
-             Pablo Main
+  
             </Grid>
 
             <Routes>
@@ -48,7 +48,7 @@ function App() {
               {/*<Route path="/dashboard" element={<Dashboard />} />*/}
               <Route path="/registrar" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/create-course" element={<CreateCoursePage />} />
+              <Route path="/create-course" element={<RutaProtegida element={CreateCoursePage} />} />
             </Routes>
           </Box>
         </Box>
