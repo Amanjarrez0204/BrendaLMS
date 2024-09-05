@@ -3,6 +3,7 @@ import axios from "axios";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Token } from "@mui/icons-material";
 
 const Loginform = () => {
   const [correoElectronico, setCorreoElectronico] = useState("");
@@ -12,11 +13,11 @@ const Loginform = () => {
   const handleRegister = async () => {
     try {
       //conectar con la base de datos para autentificar el usuario
-      const response = await axios.post("http://localhost:3001/api", {
+      const response = await axios.post("http://localhost:3001/api/admins/authenticate", {
         correoElectronico,
         contraseña,
       });
-      navigate(`/Home`);
+      navigate(`/dashboard`);
       alert("login Exitoso");
     } catch (err) {
       console.log(err);

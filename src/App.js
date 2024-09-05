@@ -15,6 +15,7 @@ import Sidebar from "./Componets/SideBar";
 import UserSideBar from "./Componets/UserSideBar";
 // import CreateCourseForm from "./Componets/CreateCourseFrom";
 import CreateCoursePage from "./pages/CreateCoursePage";
+import RutaProtegida from "./Componets/RutaProtegida";
 
 function App() {
 
@@ -42,8 +43,9 @@ function App() {
             </Grid>
 
             <Routes>
+            <Route path="/dashboard" element={<RutaProtegida element={Dashboard} />} />
               <Route path="/" element={<LoginPage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              {/*<Route path="/dashboard" element={<Dashboard />} />*/}
               <Route path="/registrar" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/create-course" element={<CreateCoursePage />} />
