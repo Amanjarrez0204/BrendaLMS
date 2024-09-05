@@ -51,6 +51,7 @@ function App() {
               <Route path="/registrar" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/create-course" element={<CreateCoursePage />} />
+              
             </Routes>
           </Box>
         </Box>
