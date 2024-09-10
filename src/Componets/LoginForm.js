@@ -6,18 +6,27 @@ import { Link } from "react-router-dom";
 
 const Loginform = () => {
   const [correoElectronico, setCorreoElectronico] = useState("");
+  const [curp, setCurp] = useState("");
   const [contraseña, setContraseña] = useState("");
   const navigate = useNavigate();
+  
 
   const handleRegister = async () => {
     try {
       //conectar con la base de datos para autentificar el usuario
-      const response = await axios.post("http://localhost:3001/api", {
-        correoElectronico,
+      const response = await axios.post("http://localhost:3001/api/users/authenticate", {
+        curp,
         contraseña,
+        
       });
-      navigate(`/Home`);
+      
+      
+      
       alert("login Exitoso");
+
+      localStorage.setItem('token', response.data.token); // set token on Local Storage
+
+      navigate(`/dashboard`);
     } catch (err) {
       console.log(err);
       alert("Error al iniciar sesion");
@@ -25,7 +34,7 @@ const Loginform = () => {
   };
   return (
     <Box component="Form" sx={{}}>
-      <TextField
+      {/* <TextField
         margin="normal"
         required
         fullWidth
@@ -36,6 +45,18 @@ const Loginform = () => {
         autoFocus
         value={correoElectronico}
         onChange={(e) => setCorreoElectronico(e.target.value)}
+      /> */}
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="curp"
+        label="CURP"
+        name="curp"
+        autoComplete="curp"
+        autoFocus
+        value={curp}
+        onChange={(e) => setCurp(e.target.value)}
       />
       <TextField
         margin="normal"

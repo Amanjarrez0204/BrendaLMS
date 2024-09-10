@@ -6,6 +6,13 @@ import { Link } from "react-router-dom";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const navigate = useNavigate();
+
+  const handleCerrarSesion = () => {
+    // localStorage.removeItem("token");
+    localStorage.clear();
+    navigate(`/login`);
+  }
+
   return (
     <AppBar position="sticky" sx={{ p: 0 }}>
       <Toolbar sx={{ p: 0 }}>
@@ -25,6 +32,17 @@ const Appbar = ({ handleDrawerToggle }) => {
           to="/registrar"
         >
           Registrarse
+        </Button>
+        <Button
+          color="inherit"
+          sx={{ marginLeft: `auto`, p: 2 }}
+          component={Link}
+          to="/login"
+          onClick={
+            () => 
+            handleCerrarSesion()}
+        >
+          Cerrar Sesión
         </Button>
       </Toolbar>
     </AppBar>
