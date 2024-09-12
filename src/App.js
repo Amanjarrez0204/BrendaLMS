@@ -17,6 +17,9 @@ import UserSideBar from "./Componets/UserSideBar";
 import CreateCoursePage from "./pages/CreateCoursePage";
 import RutaProtegida from "./Componets/RutaProtegida";
 
+
+
+
 function App() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -96,7 +99,7 @@ if (isLogged) {
 
             {appbarComponent}
             {userSidebarComponent}
-               {handleShowComponentsIfLoggedIn()}
+               {/* {handleShowComponentsIfLoggedIn()} */}
             </Grid>
 
             <Routes>

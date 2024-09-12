@@ -5,6 +5,8 @@ import { Navigate } from "react-router-dom";
    
 
     const estalogeado = !!localStorage.getItem('token'); // extrae token del browser
+
+    
     return   estalogeado ? <Element {...rest} /> : <Navigate to="/login" />;
  };
  export default RutaProtegida;

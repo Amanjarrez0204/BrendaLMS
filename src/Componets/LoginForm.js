@@ -4,14 +4,23 @@ import { TextField, Button, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+// import { useAuth } from "../AuthContext"; 
+
+
 const Loginform = () => {
   const [correoElectronico, setCorreoElectronico] = useState("");
   const [curp, setCurp] = useState("");
   const [contraseña, setContraseña] = useState("");
   const navigate = useNavigate();
   
+  // const { login } = useAuth(); 
+  // const handleLogin = () => {
+    
+  //   login(); // Cambia el estado a autenticado
+  // };
 
-  const handleRegister = async () => {
+
+  const handeLogin = async () => {
     try {
       //conectar con la base de datos para autentificar el usuario
       const response = await axios.post("http://localhost:3001/api/users/authenticate", {
@@ -79,7 +88,7 @@ const Loginform = () => {
         fullWidth
         variant="contained"
         sx={{ mt: 2, mb: 2 }}
-        onClick={handleRegister}
+        onClick={handeLogin}
       >
         iniciar Sesión
       </Button>

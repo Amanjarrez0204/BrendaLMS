@@ -1,3 +1,25 @@
+// import React from "react";
+// // import { useAuth } from "../AuthContext"; 
+// import { useAuth } from "../Componets/UseAuth"
+
+// const LoginPage = () => {
+//   const { login } = useAuth(); 
+
+//   const handleLogin = () => {
+    
+//     login(); // Cambia el estado a autenticado
+//   };
+
+//   return (
+//     <div>
+//       <h2>Login Page</h2>
+//       <button onClick={handleLogin}>Login</button>
+//     </div>
+//   );
+// };
+
+// export default LoginPage;
+
 import React, { useState } from "react";
 import Loginform from "../Componets/LoginForm";
 
