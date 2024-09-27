@@ -18,9 +18,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
   const drawer = (
     <div>
       <List onClick={handleDrawerToggle}>
-        {/*         <ListItem button component={Link} to="/login">
-          <ListItemText primary="Login" />
-        </ListItem> */}
+        
         <ListItem button component={Link} to="/dashboard">
           <ListItemText primary="Inicio" />
         </ListItem>
@@ -58,7 +56,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
       </Drawer>
       {/* Drawer for desktop */}
       <Drawer
-        variant="Temporary"
+        variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
         sx={{

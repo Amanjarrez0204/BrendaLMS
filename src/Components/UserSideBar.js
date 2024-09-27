@@ -127,7 +127,8 @@ const UserSideBar = ({ mobileOpen, handleDrawerToggle }) => {
           <ListItemText primary="Registrar Usuario" />
         </ListItem>
       </List>
-      {AnchorTemporaryDrawer}
+      {/* {AnchorTemporaryDrawer} */}
+      <AnchorTemporaryDrawer />
     </div>
   );
 
@@ -155,7 +156,7 @@ const UserSideBar = ({ mobileOpen, handleDrawerToggle }) => {
       </Drawer>
       {/* Drawer for desktop */}
       <Drawer
-        variant="Temporary"
+        variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
         sx={{

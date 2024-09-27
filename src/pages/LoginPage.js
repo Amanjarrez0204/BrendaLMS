@@ -1,47 +1,33 @@
-// import React from "react";
-// // import { useAuth } from "../AuthContext"; 
-// import { useAuth } from "../Componets/UseAuth"
+import React, { useState, useEffect } from "react";
+import Loginform from "../Components/LoginForm";
+import { Box, Grid, Typography, Paper } from "@mui/material";
+import { checkToken } from "../App";
+import { useAuth } from "../AuthContext"; 
 
-// const LoginPage = () => {
-//   const { login } = useAuth(); 
 
-//   const handleLogin = () => {
-    
-//     login(); // Cambia el estado a autenticado
-//   };
 
-//   return (
-//     <div>
-//       <h2>Login Page</h2>
-//       <button onClick={handleLogin}>Login</button>
-//     </div>
-//   );
-// };
+const LoginPage = ({ onLogin }) => {
+  // const [mobileOpen, setMobileOpen] = useState(false);
+  // const handleDrawerToggle = () => {
+  //   setMobileOpen(!mobileOpen);
+  // };
 
-// export default LoginPage;
 
-import React, { useState } from "react";
-import Loginform from "../Componets/LoginForm";
+  // useEffect(() => {
+  //   checkToken();
 
-import { AppBar, Box, Grid, Typography, Paper } from "@mui/material";
-import Appbar from "../Componets/AppBar";
-import Sidebar from "../Componets/SideBar";
-
-const LoginPage = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  // }, [])
+  // const LoginPage = () => {
+    // const { login } = useAuth(); 
+  
+    // const handleLogin = () => {
+      
+    //   login(); // Cambia el estado a autenticado
+    // };
+  
   return (
     <Box sx={{}}>
       <Grid container spacing={2} alignItems="center" justifyContent="center">
-        {/* <Grid item xs={12}>
-          <Appbar handleDrawerToggle={handleDrawerToggle} />
-          <Sidebar
-            mobileOpen={mobileOpen}
-            handleDrawerToggle={handleDrawerToggle}
-          />
-        </Grid> */}
 
         <Grid item xs={12} justifyContent="center">
           <Typography variant="h6" sx={{ textAlign: "center" }}>
@@ -59,9 +45,9 @@ const LoginPage = () => {
         >
           <Paper sx={{ p: 4, mx: 4 }}>
             <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
-              Iniciar Sesión{" "}
+              Iniciar Sesión 
             </Typography>
-            <Loginform />
+            <Loginform onLogin={onLogin}  />
           </Paper>
         </Grid>
       </Grid>

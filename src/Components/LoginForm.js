@@ -3,24 +3,19 @@ import axios from "axios";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useAuth } from "../AuthContext"; 
 
-// import { useAuth } from "../AuthContext"; 
 
 
-const Loginform = () => {
+const Loginform = ({ onLogin }) => {
   const [correoElectronico, setCorreoElectronico] = useState("");
   const [curp, setCurp] = useState("");
   const [contraseña, setContraseña] = useState("");
   const navigate = useNavigate();
   
-  // const { login } = useAuth(); 
-  // const handleLogin = () => {
-    
-  //   login(); // Cambia el estado a autenticado
-  // };
+  // const { login } = useAuth();
 
-
-  const handeLogin = async () => {
+  const handleLogin = async () => {
     try {
       //conectar con la base de datos para autentificar el usuario
       const response = await axios.post("http://localhost:3001/api/users/authenticate", {
@@ -30,11 +25,12 @@ const Loginform = () => {
       });
       
       
-      
+      // login(); // Cambia el estado a autenticado
+
       alert("login Exitoso");
 
       localStorage.setItem('token', response.data.token); // set token on Local Storage
-
+      onLogin(response.data.token);
       navigate(`/dashboard`);
     } catch (err) {
       console.log(err);
@@ -42,19 +38,8 @@ const Loginform = () => {
     }
   };
   return (
-    <Box component="Form" sx={{}}>
-      {/* <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="correoElectronico"
-        label=" Correo Electronico"
-        name="correoElectronico"
-        autoComplete="correoElectronico"
-        autoFocus
-        value={correoElectronico}
-        onChange={(e) => setCorreoElectronico(e.target.value)}
-      /> */}
+    <Box component="form" sx={{}}>
+
       <TextField
         margin="normal"
         required
@@ -80,7 +65,7 @@ const Loginform = () => {
         value={contraseña}
         onChange={(e) => setContraseña(e.target.value)}
       />
-      {/* // mensaje y link para olvido de contrasena, se usa link para ir a la pagina*/}
+   
       <Typography variant="body2" align="center">
         <Link to="/recuperarcontraseña">¿Olvidaste tu contraseña?</Link>
       </Typography>
@@ -88,7 +73,8 @@ const Loginform = () => {
         fullWidth
         variant="contained"
         sx={{ mt: 2, mb: 2 }}
-        onClick={handeLogin}
+        onClick={handleLogin}
+        
       >
         iniciar Sesión
       </Button>

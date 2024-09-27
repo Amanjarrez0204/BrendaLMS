@@ -1,130 +1,88 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AppBar, Box, Grid, Typography, Paper } from "@mui/material";
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Box, Grid } from "@mui/material";
 
 import RegisterPage from "./pages/RegisterPage";
-import Loginform from "./Componets/LoginForm";
-
-import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
-
-import alumnosList from "./Componets/AlumnosList";
-import Appbar from "./Componets/AppBar";
-import Sidebar from "./Componets/SideBar";
-import UserSideBar from "./Componets/UserSideBar";
-// import CreateCourseForm from "./Componets/CreateCourseForm";
+import Appbar from "./Components/AppBar";
+import UserSideBar from "./Components/UserSideBar";
 import CreateCoursePage from "./pages/CreateCoursePage";
-import RutaProtegida from "./Componets/RutaProtegida";
+import RutaProtegida from "./Components/RutaProtegida";
 
 
-
-
-function App() {
-
+  export const checkToken =  () => {
+    const token =  localStorage.getItem('token');
+    return !!token; 
+  };
+  const AuthContext = React.createContext();
+const App = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
-
- 
-
-
+  const [isLogged, setIsLogged] = useState(false); 
+  // const navigate = useNavigate();
+  
+const ShowHidden = ({ component, isLogged }) => {
+  return isLogged ? component : null; 
+};
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-const tokenTrue = localStorage.getItem('token');
-const checkToken = async () => {
-  
-      const token = await localStorage.getItem('token');
-      setIsLogged(!!token);
-      // loggedIn = true;
-    };
-  useEffect(() => {
-    
+  const handleLogin = (token) => {
+    localStorage.setItem('token', token); 
+    setIsLogged(true); 
+  };
 
-    checkToken();
-    // hanldleComponentsIfLoggedIn();
-    handleShowComponentsIfLoggedIn()
+  const handleLogout = () => {
+    localStorage.removeItem('token'); 
+    setIsLogged(false); 
+    // navigate("/login");
+    
+  };
+
+
+  useEffect(() => {
+    const tokenExists = checkToken();
+    setIsLogged(tokenExists);
 
   }, []);
 
-let appbarComponent = "";
-let userSidebarComponent = "";
-
-if (isLogged) {
-  // const appbarComponent = async () => {<Appbar handleDrawerToggle={handleDrawerToggle} />;}
-  appbarComponent = <Appbar handleDrawerToggle={handleDrawerToggle} />;
-  userSidebarComponent = (
-    <UserSideBar
-      mobileOpen={mobileOpen}
-      handleDrawerToggle={handleDrawerToggle}
-    />
-  );
-}
-
-
-  const handleShowComponentsIfLoggedIn = () => {
-    if (isLogged) {
-      return (
-        <div>
-          <Appbar handleDrawerToggle={handleDrawerToggle} />
-          <UserSideBar
-            mobileOpen={mobileOpen}
-            handleDrawerToggle={handleDrawerToggle}
-          />
-        </div>
-      );
-    }
-  }
-
-
-
-
-
-
-
-
-  
   return (
+    
+    <AuthContext.Provider value={{ isLogged, setIsLogged }}>
     <div>
       <Router>
-        <Box >
-          <Box component="main">           
-           {/* Main Box Component's Background color was defined in the css body Rule*/}
-          
-          
-            <Grid item xs={12}>
+        {/* <ShowHidden component={<Appbar handleDrawerToggle={handleDrawerToggle} />} isLogged={isLogged} />
+        <ShowHidden component={<UserSideBar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />} isLogged={isLogged} /> */}
 
-            
+        <Grid container>
+          <Grid item xs={12}>
 
-            {appbarComponent}
-            {userSidebarComponent}
-               {/* {handleShowComponentsIfLoggedIn()} */}
-            </Grid>
+              {isLogged && <Appbar handleDrawerToggle={handleDrawerToggle} handleLogout={handleLogout}  />}
+              {isLogged && <UserSideBar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle}  />}
+             {/* <ShowHidden component={<Appbar handleDrawerToggle={handleDrawerToggle} />} isLogged={isLogged} />
+             <ShowHidden component={<UserSideBar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />} isLogged={isLogged} /> */}
+          </Grid>
+        </Grid>
 
-            <Routes>
-              {/* <Route path="/" element={<LoginPage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/registrar" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/create-course" element={<CreateCoursePage />} /> */}
+        <Box>
+          <Box component="main">
+          <Routes>
+                <Route path="/dashboard" element={<RutaProtegida element={Dashboard} isLogged={isLogged}/>} />
+                <Route path="/" element={<LoginPage onLogin={handleLogin}/>} />
               
-              <Route path="/dashboard" element={<RutaProtegida element={Dashboard} />} />
-              <Route path="/" element={<LoginPage />} />
-              {/*<Route path="/dashboard" element={<Dashboard />} />*/}
-              <Route path="/registrar" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/create-course" element={<RutaProtegida element={CreateCoursePage} />} />
-    
+                <Route path="/registrar" element={<RegisterPage onLogin={handleLogin}/>} />
+                <Route path="/login" element={<LoginPage onLogin={handleLogin}/>} />
+                <Route path="/create-course" element={<RutaProtegida element={CreateCoursePage} isLogged={isLogged} />} />
+              </Routes>
 
-
-
-            </Routes>
           </Box>
         </Box>
       </Router>
     </div>
-  );
-}
+ 
+  </AuthContext.Provider>
+   );
+};
 
 export default App;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import RegisterFrom from "../Componets/RegisterFrom";
+import RegisterFrom from "../Components/RegisterFrom";
 
 import { AppBar, Box, Grid, Paper, Typography } from "@mui/material";
-import Appbar from "../Componets/AppBar";
-import Sidebar from "../Componets/SideBar";
+import Appbar from "../Components/AppBar";
+import Sidebar from "../Components/SideBar";
 
 const RegisterPage = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
