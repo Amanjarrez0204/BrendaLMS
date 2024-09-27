@@ -3,30 +3,28 @@ import Loginform from "../Components/LoginForm";
 import { Box, Grid, Typography, Paper } from "@mui/material";
 import { checkToken } from "../App";
 import { useAuth } from "../AuthContext"; 
+import { useNavigate } from "react-router-dom";
+
 
 
 
 const LoginPage = ({ onLogin }) => {
-  // const [mobileOpen, setMobileOpen] = useState(false);
-  // const handleDrawerToggle = () => {
-  //   setMobileOpen(!mobileOpen);
-  // };
+  const [isLogged, setIsLogged] = useState(false);
+  const navigate = useNavigate();
+  if (isLogged) {
+    // onLogin();
+    navigate("/dashboard");
+  }
+  useEffect(() => {
+    const tokenExists = checkToken();
+    setIsLogged(tokenExists);
+    
 
-
-  // useEffect(() => {
-  //   checkToken();
-
-  // }, [])
-  // const LoginPage = () => {
-    // const { login } = useAuth(); 
-  
-    // const handleLogin = () => {
-      
-    //   login(); // Cambia el estado a autenticado
-    // };
-  
+  }, []);
   return (
     <Box sx={{}}>
+      {isLogged && navigate("/dashboard")}
+
       <Grid container spacing={2} alignItems="center" justifyContent="center">
 
         <Grid item xs={12} justifyContent="center">
