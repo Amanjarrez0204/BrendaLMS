@@ -1,14 +1,19 @@
 
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { AppBar, Toolbar, Typography, IconButton, Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useAuth } from "../AuthContext"; 
+import { useAuth } from "../AuthContext";
+import { checkToken } from "../App"; 
+
+
 
 
 const Appbar = ({ handleDrawerToggle, handleLogout }) => {
-  
+ 
+  const [isLogged, setIsLogged] = useState(false);
+
   const navigate = useNavigate();
 
   const handleCerrarSesion = () => {
@@ -21,7 +26,12 @@ const Appbar = ({ handleDrawerToggle, handleLogout }) => {
 
   // const { isAuthenticated, logout } = useAuth(); 
   // if (!isAuthenticated) return null; 
+  useEffect(() => {
+    const tokenExists = checkToken();
+    console.log("Token Exists: " + tokenExists)
+    setIsLogged(tokenExists);
 
+  }, []);
   return (
     <AppBar position="sticky" sx={{ p: 0 }}>
       <Toolbar sx={{ p: 0 }}>
@@ -34,14 +44,15 @@ const Appbar = ({ handleDrawerToggle, handleLogout }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6">Brenda LMS</Typography>
-        <Button
+        {!isLogged && <Button
           color="inherit"
           sx={{ marginLeft: `auto`, p: 2 }}
           component={Link}
           to="/registrar"
         >
           Registrarse
-        </Button>
+        </Button>}
+        <Typography sx={{ marginLeft: `auto`, p: 2 }}>Aqui estaba el boton de Registrar pero lo quite condicionalmente !isLogged && Button...</Typography>
         <Button
           color="inherit"
           sx={{ marginLeft: `auto`, p: 2 }}
