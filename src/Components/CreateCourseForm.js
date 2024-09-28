@@ -15,30 +15,74 @@ import "react-quill/dist/quill.snow.css";
 // import { Textarea } from "@mui/joy";
 
 const categories = ["Categoria 1", "Categoria 2"];
+const formValuesDraftArray = {
+  titulo: "",
+  subtitulo: "",
+  descripcion: "",
+  requisitos: "",
+  categoria: "",
+  subcategoria: "",
+  idiomas: "",
+  contenido: "",
+  creditos: "",
+  horario: "",
+  examenes: "",
+  tests: "",
+  instructor: "",
+  fechaDePublicacion: Date.now(),
+  alumnos: "",
+  objetivos: "",
+  nivelDeInstruccion: ""}
+
 
 function InformacionBasica ({ formValues, setFormValues  }) {
-  const [titulo, setTitulo] = useState("");
-  const [subtitulo, setSubtitulo] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [subcategoria, setSubcategoria] = useState("");
-  const [lenguaje, setLenguaje] = useState("");
+  // const [titulo, setTitulo] = useState("");
+  // const [subtitulo, setSubtitulo] = useState("");
+  // const [descripcion, setDescripcion] = useState("");
+  // const [categoria, setCategoria] = useState("");
+  // const [subcategoria, setSubcategoria] = useState("");
+  // const [lenguaje, setLenguaje] = useState("");
+
+  const handleUpdate = (event, field) => {
+    // let value;
+    const value = event.target ? event.target.value : event;
+    
+    // if (event && event.target) {
+    //   value = event.target.value;
+    // } else {
+    //   value = event;
+    // }
+    // setFormValues(  (prevFormValues) => {
+    //   return {
+    //     ...prevFormValues,
+    //     [field]: value
+    //   };
+    // });
+    // setFormValues({
+    //   ...formValues,
+    //   [field]: value
+    // });
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [field]: value,
+    }));
 
 
-  // const handleUpdate = (event, field) => {
-  //   const value = event.target.value;
-  //   setFormValues(prevValues => ({
-  //     ...prevValues,
-  //     [field]: value
-  //   }));
-  // };
-  const guardarCurso = async (
-    // event, draft
-  ) => {
-    // event.preventDefault(); // Prevent default form submission behavior
+    //    ...formValues,
+    //     [field]: value
+    //    }));
+    // const setValueEvent = {target: { value: value } };
+    
+    // // const formValuesDraftArray = {field value};
+    // console.log("Form Values Draft Array: ", formValuesDraftArray);
+    // console.log("Event: ", setValueEvent);
+    console.log("Form Values: ", formValues);
+  };
 
+  
+  const guardarCurso = async () => {
+    const { titulo, subtitulo, descripcion, categoria, subcategoria, lenguaje } = formValues;
     try {
-      // console.log(draft);
       const response = await axios.post("http://localhost:3001/api/cursos/", {
         titulo,
         subtitulo,
@@ -46,18 +90,15 @@ function InformacionBasica ({ formValues, setFormValues  }) {
         categoria,
         subcategoria,
         lenguaje,
-      
       });
       alert("Curso registrado con éxito");
       console.log(response.data);
-      // window.location.href = "/cursos";
     } catch (err) {
       console.log("Que fue lo que paso ???");
-      // console.log(err.response.data);
       console.log(err);
-      // alert(`Error al registrar curso ${formValues.titulo}`);
     }
   };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -65,10 +106,7 @@ function InformacionBasica ({ formValues, setFormValues  }) {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          onClick={(event) => guardarCurso(
-            // event, formValues
-          )}
-        >
+          onClick={(event) => guardarCurso()}>
           Guardar curso 1
         </Button>
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -83,16 +121,13 @@ function InformacionBasica ({ formValues, setFormValues  }) {
           id="titulo"
           label="Título del curso"
           name="titulo"
-          // autoComplete="Titulo del curso"
-          // value={formValues.titulo}
-          // onChange={(e) => handleUpdate(e, 'titulo')}
-          // value= {formValues.titulo}
-          // onChange={(e) => setFormValues(`titulo: ${e.target.value}`)}
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
+          // value={formValues.titulo || ""}
+          // value={titulo}
+          // onChange={(e) => setTitulo(e.target.value)}
+          value={formValues.titulo || ""}
+          // onChange={ (e) => handleUpdate(e, {...formValues, titulo:  e.target.value}) }
+          onChange={(e) => handleUpdate(e, "titulo")}
 
-          // value={curp}
-          // onChange={(e) => setCurp(e.target.value)}
         />
         <TextField
           margin="normal"
@@ -101,8 +136,9 @@ function InformacionBasica ({ formValues, setFormValues  }) {
           id="subtitulo"
           label="Subtítulo del curso"
           name="subtitulo"
-          value={subtitulo}
-          onChange={(e) => setSubtitulo(e.target.value)}
+          // value={subtitulo}
+          // onChange={(e) => setSubtitulo(e.target.value)}
+          onChange={ (e) => handleUpdate(e, "subtitulo") }
         />
         <TextField
           margin="normal"
@@ -111,8 +147,9 @@ function InformacionBasica ({ formValues, setFormValues  }) {
           id="descripcion"
           label="Descripción del curso"
           name="descripcion"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
+          // value={descripcion}
+          // onChange={(e) => setDescripcion(e.target.value)}
+          onChange={ (e) => handleUpdate(e, "descripcion") }
         />
       </Grid>
       <Grid item container spacing={2}>
@@ -122,8 +159,9 @@ function InformacionBasica ({ formValues, setFormValues  }) {
             <Select
               labelId="categoria-label"
               id="categoria"
-              value={categoria}
-              onChange={(e) => setCategoria(e.target.value)}
+              // value={categoria}
+              // onChange={(e) => setCategoria(e.target.value)}
+              onChange={ (e) => handleUpdate(e, "categoria") }
             >
               {["Categoria 1", "Categoria 2", "Categoria 3"].map((categoria) => (
                 <MenuItem key={categoria} value={categoria}>
@@ -139,8 +177,9 @@ function InformacionBasica ({ formValues, setFormValues  }) {
             <Select
               labelId="subCategoria-label"
               id="sub-categoria"
-              value={subcategoria}
-              onChange={(e) => setSubcategoria(e.target.value)}
+              // value={subcategoria}
+              // onChange={(e) => setSubcategoria(e.target.value)}
+              onChange={ (e) => handleUpdate(e, "subcategoria") }
             >
               {["Sub Categoria 1", "Sub Categoria 2", "Sub Categoria 3"].map((subCategoria) => (
                 <MenuItem key={subCategoria} value={subCategoria}>
@@ -155,9 +194,10 @@ function InformacionBasica ({ formValues, setFormValues  }) {
             <InputLabel id="lenguaje-label">Lenguaje</InputLabel>
             <Select
               labelId="Lenguaje-label"
-              id="sub-categoria"
-              value={lenguaje}
-              onChange={(e) => setLenguaje(e.target.value)}
+              id="lenguaje"
+              // value={lenguaje}
+              // onChange={(e) => setLenguaje(e.target.value)}
+              onChange={ (e) => handleUpdate(e, "lenguaje") }
             >
               {["Lenguaje 1", "Lenguaje 2", "Lenguaje 3"].map((lenguaje) => (
                 <MenuItem key={lenguaje} value={lenguaje}>
@@ -210,7 +250,7 @@ function Detalles({ formValues, setFormValues }) {
         placeholder="Descripcion del curso"
         ref={editor}
         config={config}
-        onBlur={(e) => handleUpdate(e, "descripcion")}
+        onChange={(e) => handleUpdate(e, "descripcion")}
         // value={formValues.descripcion}
             
       />
@@ -372,50 +412,73 @@ function Contenido({ formValues, setFormValues }) {
   );
 }
 
+function SidebarCrearCurso ({ onSectionChange })  {
+  const [open, setOpen] = React.useState(true);
 
-  
-const CreateCourseForm = (draft ) => {
-
-  const guardarCurso = async (event, draft) => {
-    event.preventDefault(); // Prevent default form submission behavior
-    // pull draftJson from state
-    // const draft = draftJson;
-    console.log(draft);
-    console.log(draft[4]);
-    console.log(event);
-    console.log(draft.titulo);
-    console.log(draft.subtitulo)
-    // subtitulo: draft.subtitulo,
-    // descripcion: draft.descripcion,
-    // categoria: draft.categoria,
-    // subcategoria: draft.subcategoria,
-    // idiomas: draft.idiomas,
-  
-    
-
-    try {
-      console.log(draft);
-      const response = await axios.post("http://localhost:3001/api/cursos/", {
-        titulo: draft.titulo,
-        subtitulo: draft.subtitulo,
-        descripcion: draft.descripcion,
-        categoria: draft.categoria,
-        subcategoria: draft.subcategoria,
-        idiomas: draft.idiomas,
-      
-      });
-      alert("Curso registrado con éxito");
-      console.log(response.data);
-      // window.location.href = "/cursos";
-    } catch (err) {
-      console.log("Que fue lo que paso ???");
-      // console.log(err.response.data);
-      console.log(err);
-      // alert(`Error al registrar curso ${formValues.titulo}`);
-    }
+  const handleClick = (section) => {
+    onSectionChange(section);
   };
 
-  const [formValues, setFormValues] = useState({
+  return (
+    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      component="nav"
+      aria-labelledby="nested-list-subheader">
+      <ListItemButton onClick={() => handleClick({InformacionBasica})}>
+        <ListItemIcon>
+          <SendIcon />
+        </ListItemIcon>
+        <ListItemText primary="Información básica" />
+      </ListItemButton>
+      <ListItemButton onClick={() => handleClick({Detalles})}>
+        <ListItemIcon>
+          <DraftsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Detalles" />
+      </ListItemButton>
+      <ListItemButton onClick={() => handleClick({Contenido})}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Contenido" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Evaluaciones" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Asignaciones" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Videoconferencias" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Ajustes" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Calificaciones" />
+      </ListItemButton>
+      <ListItemButton></ListItemButton>
+    </List>
+  );
+}
+  
+const CreateCourseForm = (draft ) => {
+  
+    const [formValues, setFormValues] = useState({
     titulo: "",
     subtitulo: "",
     descripcion: "",
@@ -434,54 +497,96 @@ const CreateCourseForm = (draft ) => {
     objetivos: "",
     nivelDeInstruccion: ""
   });
-  
-  // console.log(formValues);
 
-  const [showSection, setShowSection] = 
-  useState(<InformacionBasica formValues={formValues} setFormValues={setFormValues}  />);
+  const [ShowSection, setShowSection] = useState(
+    {InformacionBasica}
+ // <InformacionBasica  formValues={formValues} setFormValues={setFormValues}     />
+  );
+
+  const [titulo, setTitulo] = useState("");
+
+  const StatesCommented = () => {
+
+    // const [titulo, setTitulo] = useState("");
+    // const [subtitulo, setSubtitulo] = useState("");
+    // const [descripcion, setDescripcion] = useState("");
+    // const [contenido, setContenido] = useState("");
+    // const [creditos, setCreditos] = useState("");
+    // const [horario, setHorario] = useState("");
+    // const [examenes, setExamenes] = useState("");
+    // const [tests, setTests] = useState("");
+    // const [instructor, setInstructor] = useState("");
+    // const [fechaDePublicacion, setFechaDePublicacion] = useState(Date.now);
+    // const [alumnos, setAlumnos] = useState("");
+
+    // // Estados nuevos que se deben incluir en el modelo de <<Curso>>
+    // const [categoria, setCategoria] = useState("");
+    // const [subcategoria, setSubcategoria] = useState("");
+    // const [idiomas, setIdiomas] = useState("");
+
+    // const [objetivos, setObjetivos] = useState("");
+    // const [nivelDeInstruccion, setNivelDeInstruccion] = useState("");
+    // const [requisitos, setRequisitos] = useState("");
+    // const [instrucciones, setInstrucciones] = useState("");
+    // const [capitulos, setCapitulos] = useState("");
+    // const [lecciones, setLecciones] = useState("");
+    // const [añadir, setAñadir] = useState("");
+    // const [evaluaciones, setEvaluaciones] = useState("");
+    // const [asignaciones, setAsignaciones] = useState("");
+    // // const [videoconferencias, setVideoconferencias] = useState("");
+    // const [ajustes, setAjustes] = useState("");
+    // const [calificaciones, setCalificaciones] = useState("");
+    // const [encuestas, setEncuestas] = useState("");
+    // const [videoconferencias, setVideoconferencias] = useState("");
+  }
+
+ 
+  const guardarCurso = async (event, formValuesDraft, setFormValuesDraft, section, statesCommented) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    console.log("evento: ", event);
+    console.log("name: ", section.titulo);
+    console.log("name: ", titulo);
+    console.log("Section: ", section);
+    console.log("Draft", formValuesDraft);
+    console.log("Form Values Draft: ", formValues );
+    console.log("States Commented: ", statesCommented);
+
+
+
+    // try {
+    //   console.log(draft);
+    //   const response = await axios.post("http://localhost:3001/api/cursos/", {
+    //     titulo: draft.titulo,
+    //     subtitulo: draft.subtitulo,
+    //     descripcion: draft.descripcion,
+    //     categoria: draft.categoria,
+    //     subcategoria: draft.subcategoria,
+    //     idiomas: draft.idiomas,
+      
+    //   });
+    //   alert("Curso registrado con éxito");
+    //   console.log(response.data);
+    //   // window.location.href = "/cursos";
+    // } catch (err) {
+    //   console.log("Que fue lo que paso ???");
+    //   // console.log(err.response.data);
+    //   console.log(err);
+    //   // alert(`Error al registrar curso ${formValues.titulo}`);
+    // }
+  };
+ 
+  const navigate = useNavigate();
+   
   const handleSectionChange = (section) => {
     setShowSection(section);
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    
+    event.preventDefault();   
     console.log(formValues);
   };
 
-  const [titulo, setTitulo] = useState("");
-  // // const [subtitulo, setSubtitulo] = useState("");
-  // const [descripcion, setDescripcion] = useState("");
-  // const [contenido, setContenido] = useState("");
-  // const [creditos, setCreditos] = useState("");
-  // const [horario, setHorario] = useState("");
-  // const [examenes, setExamenes] = useState("");
-  // const [tests, setTests] = useState("");
-  // const [instructor, setInstructor] = useState("");
-  // const [fechaDePublicacion, setFechaDePublicacion] = useState(Date.now);
-  // const [alumnos, setAlumnos] = useState("");
 
-  // // Estados nuevos que se deben incluir en el modelo de <<Curso>>
-  // const [categoria, setCategoria] = useState("");
-  // const [subcategoria, setSubcategoria] = useState("");
-  // const [idiomas, setIdiomas] = useState("");
-  // const [subtitulo, setSubtitulo] = useState("");
-  // const [objetivos, setObjetivos] = useState("");
-  // const [nivelDeInstruccion, setNivelDeInstruccion] = useState("");
-  // const [requisitos, setRequisitos] = useState("");
-  // const [instrucciones, setInstrucciones] = useState("");
-  // const [capitulos, setCapitulos] = useState("");
-  // const [lecciones, setLecciones] = useState("");
-  // const [añadir, setAñadir] = useState("");
-  // const [evaluaciones, setEvaluaciones] = useState("");
-  // const [asignaciones, setAsignaciones] = useState("");
-  // // const [videoconferencias, setVideoconferencias] = useState("");
-  // const [ajustes, setAjustes] = useState("");
-  // const [calificaciones, setCalificaciones] = useState("");
-  // const [encuestas, setEncuestas] = useState("");
-  // // const [videoconferencias, setVideoconferencias] = useState("");
-
-  const navigate = useNavigate();
 
   
   const handleRegister = async (event) => {
@@ -510,7 +615,7 @@ const CreateCourseForm = (draft ) => {
       alert("Curso registrado con éxito");
       console.log(response.data);
 
-      navigate("/courses");
+      navigate("/dashboard");
     } catch (err) {
       console.log("Que fue lo que paso ???");
       console.log(err.response.data);
@@ -518,74 +623,7 @@ const CreateCourseForm = (draft ) => {
       // alert(`Error al registrar curso ${titulo}`);
     }
   };
-  function SidebarCrearCurso({ onSectionChange }) {
-    const [open, setOpen] = React.useState(true);
   
-    const handleClick = (section) => {
-      onSectionChange(section);
-    };
-  
-    return (
-      <List
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-  
-      >
-        <ListItemButton onClick={() => handleClick(<InformacionBasica titulo={titulo} setTitulo={setTitulo} formValues={formValues}   setFormValues={setFormValues} />)}>
-
-
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Información básica" />
-        </ListItemButton>
-        <ListItemButton onClick={() => handleClick(<Detalles formValues={formValues} setFormValues={setFormValues}   />)}>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Detalles" />
-        </ListItemButton>
-        <ListItemButton onClick={() => handleClick(<Contenido formValues={formValues} setFormValues={setFormValues}    />)}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Contenido" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Evaluaciones" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Asignaciones" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Videoconferencias" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Ajustes" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Calificaciones" />
-        </ListItemButton>
-        <ListItemButton></ListItemButton>
-      </List>
-    );
-  }
   
   return (
     <Box component="form" sx={{}}>
@@ -597,35 +635,32 @@ const CreateCourseForm = (draft ) => {
               xs: "100%", // 100% width when window width is less than 600px
               sm: 250, // 50% width when window width is more than 600px
             },
-          }}
-        >
+          }}>
           <Paper>
             <SidebarCrearCurso onSectionChange={handleSectionChange} />
           </Paper>
         </Grid>
         <Grid
-          item
-          sx={{
-            width: {
-              // xs: '100%', // 100% width when window width is less than 600px
-              sx: "100%",
-              sm: "calc(100% - 250px)", // 50% width when window width is more than 600px
-            },
-          }}
-        >
+            item
+            sx={{
+              width: {                
+                sx: "100%",
+                sm: "calc(100% - 250px)",
+              },
+            }}>
           <Typography variant="h63" sx={{ fontWeight: "Bold" }}>
             Nuevo curso
           </Typography>
           <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={(event) => guardarCurso(event, formValues)}
-      >
-        Guardar curso
-      </Button>
-          {showSection}
- 
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={(event) => guardarCurso(event, formValues, setFormValues, ShowSection, StatesCommented)}>
+            Guardar curso
+          </Button>
+          
+          <ShowSection formValues={formValues} setFormValues={setFormValues} />
+          
         </Grid>
        
       </Grid>
@@ -633,10 +668,7 @@ const CreateCourseForm = (draft ) => {
         fullWidth
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
-        // onClick={handleSubmit}
-        onClick={handleRegister}
-        // Link to the courses creation page called crate-course
-      >
+        onClick={handleRegister}>
         Crear nuevo curso
       </Button>
     </Box>

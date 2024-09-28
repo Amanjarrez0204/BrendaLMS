@@ -213,31 +213,23 @@ const Dashboard = () => {
             <Paper sx={{ p: 2, display: "flex" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
-                  value={value}
+                  value={value || 0}
                   onChange={handleChange}
-                  aria-label="basic tabs example"
-                >
-                  <Tab label="Perfíl" {...a11yProps(0)} />
-  
-                  <Tab
-                    label="Como maestro"
-                    {...a11yProps(1)}
-                    onClick={handleCursos}
-                  />
-                  <Tab label="Como alumno" {...a11yProps(2)} />
-                  
-                  
+                  aria-label="basic tabs example">
+
+                    <Tab key="1" label="Perfíl" {...a11yProps(0)} />
+                    <Tab key="2" label="Como maestro" {...a11yProps(1)} onClick={handleCursos} />
+                    <Tab key="3" label="Como alumno" {...a11yProps(2)} />
+                                    
                 </Tabs>
                 
               </Box>
               <Box sx={{display: "flex", flex: "auto", alignItems: "center", justifyContent: "flex-end"}} >
               <Button  
-              variant="contained"
-              color="primary"
-              
-              component={Link}
-              to="/create-course"
-            
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/create-course"
               >
                   + Crear curso
                     </Button>
@@ -245,7 +237,7 @@ const Dashboard = () => {
             </Paper>
           </Grid>
   
-          <CustomTabPanel value={value} index={0} sx={{}}>
+          <CustomTabPanel key="1" value={value} index={0} sx={{}}>
             <Box
               sx={{
                 m: {
@@ -313,7 +305,7 @@ const Dashboard = () => {
               </Grid>
             </Box>
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1} sx={{ p: 0 }}>
+          <CustomTabPanel key="2" value={value} index={1} sx={{ p: 0 }}>
             <Box
               sx={{
                 m: {
@@ -333,7 +325,7 @@ const Dashboard = () => {
               <Grid container spacing={2} direction={"column"}>
                 {/* Array de cursos */}
                 {cursos.map((curso, index) => (
-                  <Grid item>
+                  <Grid key={index} item>
                     <Paper sx={{ 
                           p: 2,
                           display: "flex",
@@ -399,8 +391,7 @@ const Dashboard = () => {
                           xs: -5,
                           sm: 0
   
-                        }
-  }}>
+                        }  }}>
                         <LongMenu curso={curso} />
                       </Box>
                     </Paper>
@@ -411,7 +402,7 @@ const Dashboard = () => {
               </Grid>
             </Box>
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={2} sx={{ p: 0 }}>
+          <CustomTabPanel key="3" value={value} index={2} sx={{ p: 0 }}>
             <Box
               sx={{
                 m: {
