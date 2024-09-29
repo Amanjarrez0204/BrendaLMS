@@ -35,13 +35,77 @@ const formValuesDraftArray = {
   nivelDeInstruccion: ""}
 
 
-function InformacionBasica ({ formValues, setFormValues  }) {
-  // const [titulo, setTitulo] = useState("");
+  function SidebarCrearCurso ({ onSectionChange, formValues, setFormValues })  {
+    const [open, setOpen] = React.useState(true);
+  
+    const handleClick = (section) => {
+      onSectionChange(section);
+    };
+  
+    return (
+      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        component="nav"
+        aria-labelledby="nested-list-subheader">
+        <ListItemButton onClick={() => handleClick(InformacionBasica ({formValues, setFormValues}) )}>
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <ListItemText primary="Información básica" />
+        </ListItemButton>
+        <ListItemButton onClick={() => handleClick(Detalles ({formValues, setFormValues}) )}>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Detalles" />
+        </ListItemButton>
+        {/* <ListItemButton onClick={() => handleClick(Contenido)}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Contenido" />
+        </ListItemButton> */}
+        <ListItemButton>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Evaluaciones" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Asignaciones" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Videoconferencias" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Ajustes" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Calificaciones" />
+        </ListItemButton>
+        <ListItemButton></ListItemButton>
+      </List>
+    );
+  }
+ function InformacionBasica ({ formValues, setFormValues  }) {
+// const [titulo, setTitulo] = useState("");
   // const [subtitulo, setSubtitulo] = useState("");
   // const [descripcion, setDescripcion] = useState("");
   // const [categoria, setCategoria] = useState("");
   // const [subcategoria, setSubcategoria] = useState("");
   // const [lenguaje, setLenguaje] = useState("");
+  console.log(formValues)
 
   const handleUpdate = (event, field) => {
     // let value;
@@ -136,6 +200,7 @@ function InformacionBasica ({ formValues, setFormValues  }) {
           id="subtitulo"
           label="Subtítulo del curso"
           name="subtitulo"
+          value={formValues.subtitulo}
           // value={subtitulo}
           // onChange={(e) => setSubtitulo(e.target.value)}
           onChange={ (e) => handleUpdate(e, "subtitulo") }
@@ -147,7 +212,7 @@ function InformacionBasica ({ formValues, setFormValues  }) {
           id="descripcion"
           label="Descripción del curso"
           name="descripcion"
-          // value={descripcion}
+          value={formValues.descripcion || ""}
           // onChange={(e) => setDescripcion(e.target.value)}
           onChange={ (e) => handleUpdate(e, "descripcion") }
         />
@@ -159,7 +224,7 @@ function InformacionBasica ({ formValues, setFormValues  }) {
             <Select
               labelId="categoria-label"
               id="categoria"
-              // value={categoria}
+              value={formValues.categoria || ""}
               // onChange={(e) => setCategoria(e.target.value)}
               onChange={ (e) => handleUpdate(e, "categoria") }
             >
@@ -177,7 +242,7 @@ function InformacionBasica ({ formValues, setFormValues  }) {
             <Select
               labelId="subCategoria-label"
               id="sub-categoria"
-              // value={subcategoria}
+              value={formValues.subcategoria || ""}
               // onChange={(e) => setSubcategoria(e.target.value)}
               onChange={ (e) => handleUpdate(e, "subcategoria") }
             >
@@ -195,7 +260,7 @@ function InformacionBasica ({ formValues, setFormValues  }) {
             <Select
               labelId="Lenguaje-label"
               id="lenguaje"
-              // value={lenguaje}
+              value={formValues.lenguaje || ""}
               // onChange={(e) => setLenguaje(e.target.value)}
               onChange={ (e) => handleUpdate(e, "lenguaje") }
             >
@@ -361,149 +426,114 @@ function Detalles({ formValues, setFormValues }) {
     </Grid>
   );
 }
-function Contenido({ formValues, setFormValues }) {
+// function Contenido({ formValues, setFormValues }) {
 
-  const handleUpdate = (event, field) => {
-    const editorContent = event.target.value;
-    setFormValues(prevValues => ({
-      ...prevValues,
-      [field]: editorContent
-    }));
-  };
+//   const handleUpdate = (event, field) => {
+//     const editorContent = event.target.value;
+//     setFormValues(prevValues => ({
+//       ...prevValues,
+//       [field]: editorContent
+//     }));
+//   };
 
   
-  return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
-          Agregar Contenido
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="titulo"
-          label="Descripción"
-          name="titulo"
-          autoComplete="titulo"
-          autoFocus
+//   return (
+//     <Grid container>
+//       <Grid item xs={12}>
+//         <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
+//           Agregar Contenido
+//         </Typography>
+//       </Grid>
+//       <Grid item xs={12}>
+//         <TextField
+//           margin="normal"
+//           required
+//           fullWidth
+//           id="titulo"
+//           label="Descripción"
+//           name="titulo"
+//           autoComplete="titulo"
+//           autoFocus
 
-          // value={formValues.titulo || ''}
-          onChange={(e) => handleUpdate(e, "titulo")}
+//           // value={formValues.titulo || ''}
+//           onChange={(e) => handleUpdate(e, "titulo")}
           
 
-          />
+//           />
        
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="descripcion"
-          label="Descripción del curso"
-          name="descripcion"
-          autoComplete="descripcion"
-          value={CreateCourseForm.descripcion}
-          onChange={(e) => CreateCourseForm.setDescripcion(e.target.value)}
-        />
-      </Grid>
-    </Grid>
-  );
-}
+//         <TextField
+//           margin="normal"
+//           required
+//           fullWidth
+//           id="descripcion"
+//           label="Descripción del curso"
+//           name="descripcion"
+//           autoComplete="descripcion"
+//           value={CreateCourseForm.descripcion}
+//           onChange={(e) => CreateCourseForm.setDescripcion(e.target.value)}
+//         />
+//       </Grid>
+//     </Grid>
+//   );
+// }
 
-function SidebarCrearCurso ({ onSectionChange })  {
-  const [open, setOpen] = React.useState(true);
 
-  const handleClick = (section) => {
-    onSectionChange(section);
-  };
-
+function TempFiller({formValues, setFormValues}) {
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      component="nav"
-      aria-labelledby="nested-list-subheader">
-      <ListItemButton onClick={() => handleClick({InformacionBasica})}>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Información básica" />
-      </ListItemButton>
-      <ListItemButton onClick={() => handleClick({Detalles})}>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Detalles" />
-      </ListItemButton>
-      <ListItemButton onClick={() => handleClick({Contenido})}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Contenido" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Evaluaciones" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Asignaciones" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Videoconferencias" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Ajustes" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Calificaciones" />
-      </ListItemButton>
-      <ListItemButton></ListItemButton>
-    </List>
-  );
+    <Box>Hello World
+      {/* {formValues} */}
+      <br/>
+      {`${formValues.fechaDePublicacion}`}
+    {console.log("Tempfiller: ",formValues )}
+    </Box>
+  )
 }
-  
-const CreateCourseForm = (draft ) => {
+const CreateCourseForm = () => {
   
     const [formValues, setFormValues] = useState({
-    titulo: "",
-    subtitulo: "",
-    descripcion: "",
-    requisitos: "",
-    categoria: "",
-    subcategoria: "",
-    idiomas: "",
-    contenido: "",
-    creditos: "",
-    horario: "",
-    examenes: "",
-    tests: "",
-    instructor: "",
-    fechaDePublicacion: Date.now(),
-    alumnos: "",
-    objetivos: "",
-    nivelDeInstruccion: ""
-  });
+          titulo: "",
+          subtitulo: "",
+          descripcion: "",
+          requisitos: "",
+          categoria: "",
+          subcategoria: "",
+          idiomas: "",
+          contenido: "",
+          creditos: "",
+          horario: "",
+          examenes: "",
+          tests: "",
+          instructor: "",
+          fechaDePublicacion: Date.now(),
+          alumnos: "",
+          objetivos: "",
+          nivelDeInstruccion: ""
+        });
+
+
+
+
+
+
 
   const [ShowSection, setShowSection] = useState(
-    {InformacionBasica}
- // <InformacionBasica  formValues={formValues} setFormValues={setFormValues}     />
-  );
+    InformacionBasica ( 
+        {formValues, setFormValues}
+      )
+    // tempFiller
+    // TempFiller( 
+    //   {formValues, setFormValues}
+    // )
 
-  const [titulo, setTitulo] = useState("");
+    // <TempFiller  formValues={formValues} setFormValues={setFormValues} />
+
+    // <InformacionBasica />
+//  InformacionBasica ( {formValues, setFormValues})
+
+  );
+  
+  //  console.log("ShowSection 1:", ShowSection);
+  // const [titulo, setTitulo] = useState("");
 
   const StatesCommented = () => {
 
@@ -545,7 +575,7 @@ const CreateCourseForm = (draft ) => {
     event.preventDefault(); // Prevent default form submission behavior
     console.log("evento: ", event);
     console.log("name: ", section.titulo);
-    console.log("name: ", titulo);
+    // console.log("name: ", titulo);
     console.log("Section: ", section);
     console.log("Draft", formValuesDraft);
     console.log("Form Values Draft: ", formValues );
@@ -583,7 +613,7 @@ const CreateCourseForm = (draft ) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();   
-    console.log(formValues);
+    console.log("inHandleSubmit: ", formValues);
   };
 
 
@@ -624,7 +654,7 @@ const CreateCourseForm = (draft ) => {
     }
   };
   
-  
+  // console.log("ShowSection 2:", ShowSection);
   return (
     <Box component="form" sx={{}}>
       <Grid container spacing={2}>
@@ -637,7 +667,7 @@ const CreateCourseForm = (draft ) => {
             },
           }}>
           <Paper>
-            <SidebarCrearCurso onSectionChange={handleSectionChange} />
+            <SidebarCrearCurso onSectionChange={handleSectionChange} formValues={formValues} setFormValues={setFormValues} />
           </Paper>
         </Grid>
         <Grid
@@ -655,11 +685,17 @@ const CreateCourseForm = (draft ) => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={(event) => guardarCurso(event, formValues, setFormValues, ShowSection, StatesCommented)}>
+            // onClick={(event) => guardarCurso(event, formValues, setFormValues, ShowSection, StatesCommented)
+            // onClick={(event) => guardarCurso(event)}
+            >
+
             Guardar curso
           </Button>
-          
-          <ShowSection formValues={formValues} setFormValues={setFormValues} />
+          {/* {console.log("ShowSection return:", ShowSection )} */}
+          {/* <showSection   /> */}
+          {ShowSection }
+          {/* <ShowSection formValues={formValues} setFormValues={setFormValues} /> */}
+          {/* {ShowSection({formValues, setFormValues}) } */}
           
         </Grid>
        
