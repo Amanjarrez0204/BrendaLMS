@@ -7,9 +7,10 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import Appbar from "./Components/AppBar";
 import UserSideBar from "./Components/UserSideBar";
-import CreateCoursePage from "./pages/CreateCoursePage";
-import RutaProtegida from "./Components/RutaProtegida";
 
+import RutaProtegida from "./Components/RutaProtegida";
+import EditCoursePage from "./pages/EditCoursePage";
+import CreateCoursePage from "./pages/CreateCoursePage";
 
   export const checkToken =  () => {
     const token =  localStorage.getItem('token');
@@ -74,6 +75,7 @@ const ShowHidden = ({ component, isLogged }) => {
                 <Route path="/registrar" element={<RegisterPage onLogin={handleLogin}/>} />
                 <Route path="/login" element={<LoginPage onLogin={handleLogin}/>} />
                 <Route path="/create-course" element={<RutaProtegida element={CreateCoursePage} isLogged={isLogged} />} />
+                <Route path="/editar-curso" element={<RutaProtegida element={EditCoursePage} isLogged={isLogged} />} />
               </Routes>
 
           </Box>

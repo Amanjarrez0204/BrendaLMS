@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-// import EditCourseForm from "../Components/EditCourseForm";
-import CreateCourseForm from "../Components/CreateCourseForm";
+import EditCourseForm from "../Components/EditCourseForm";
 import { AppBar, Box, Grid, Paper, Typography } from "@mui/material";
 
+import { useLocation } from 'react-router-dom';
 
-const CreateCoursePage = () => {
+
+
+const EditCoursePage = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const location = useLocation();
+  const { cursoId, cursoName } = location.state || {};
   return (
     <Box >
       <Grid
@@ -18,9 +22,14 @@ const CreateCoursePage = () => {
         alignItems="center"
         justifyContent="center"
       >
+ 
         <Grid item xs={12} justifyContent="center">
           <Typography variant="h6" sx={{ textAlign: "center" }}>
             Bienvenido a Learning Management System
+          </Typography>
+          <Typography>
+            {cursoId} - {cursoName}
+            
           </Typography>
         </Grid>
         <Grid
@@ -33,11 +42,14 @@ const CreateCoursePage = () => {
         >
           <Paper sx={{ p: 4, mx: 4 }}>
            
-            <CreateCourseForm />
+            <EditCourseForm
+            cursoId={cursoId}
+            cursoName={cursoName}
+            />
           </Paper>
         </Grid>
       </Grid>
     </Box>
   );
 };
-export default CreateCoursePage;
+export default EditCoursePage;

@@ -36,6 +36,8 @@ import JoditEditor from "jodit-react";
 import "quill/dist/quill.snow.css";
 import "react-quill/dist/quill.snow.css";
 const categories = ["Categoria 1", "Categoria 2"];
+
+
 const formValuesDraftArray = {
   titulo: "",
   subtitulo: "",
@@ -56,7 +58,10 @@ const formValuesDraftArray = {
   nivelDeInstruccion: "",
 };
 
-function SidebarCrearCurso({ onSectionChange, formValues, setFormValues }) {
+
+
+
+function SidebarEditarCurso({ onSectionChange, formValues, setFormValues }) {
   const [open, setOpen] = React.useState(true);
 
   const handleClick = (section) => {
@@ -142,7 +147,7 @@ function SidebarCrearCurso({ onSectionChange, formValues, setFormValues }) {
     </List>
   );
 }
-function InformacionBasica({ formValues, setFormValues }) {
+function InformacionBasica({cursoId,  formValues, setFormValues }) {
   const [titulo, setTitulo] = useState("");
   const [subtitulo, setSubtitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -150,18 +155,42 @@ function InformacionBasica({ formValues, setFormValues }) {
   const [subcategoria, setSubcategoria] = useState("");
   const [lenguaje, setLenguaje] = useState("");
 
-  // const handleUpdate = (event, field) => {
-  //   const value = event.target ? event.target.value : event;
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     [field]: value,
-  //   }));
-  // };
+
+  // setTitulo(
+  //   formValues.titulo || ""
+  // )
+  // setSubtitulo( 
+  //   formValues.subtitulo || ""
+  // )
+
+// Sincroniza estados locales cuando formValues cambie
+  useEffect(() => {
+    setTitulo(formValues.titulo || "");
+    setSubtitulo(formValues.subtitulo || "");
+    setDescripcion(formValues.descripcion || "");
+    setCategoria(formValues.categoria || "");
+    setSubcategoria(formValues.subcategoria || "");
+    setLenguaje(formValues.lenguaje || "");
+  }, [formValues]);
+
+    // Actualiza formValues cuando los estados locales cambien
+    useEffect(() => {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        titulo,
+        subtitulo,
+        descripcion,
+        categoria,
+        subcategoria,
+        lenguaje,
+      }));
+    }, [titulo, subtitulo, descripcion, categoria, subcategoria, lenguaje]);
+  
 
   const guardarCurso = async () => {
     // const { titulo, subtitulo, descripcion, categoria, subcategoria, lenguaje } = formValues;
     try {
-      const response = await axios.post("http://localhost:3001/api/cursos/", {
+      const response = await axios.put("http://localhost:3001/api/cursos/"+cursoId, {
         titulo,
         subtitulo,
         descripcion,
@@ -171,6 +200,9 @@ function InformacionBasica({ formValues, setFormValues }) {
       });
       alert("Curso registrado con éxito");
       console.log(response.data);
+
+     
+
     } catch (err) {
       console.log("Que fue lo que paso ???");
       console.log(err);
@@ -200,7 +232,7 @@ function InformacionBasica({ formValues, setFormValues }) {
           id="titulo"
           label="Título del curso"
           name="titulo"
-          value={titulo || ""}
+          value={ titulo  }
           onChange={(e) => setTitulo(e.target.value)}
         />
         <TextField
@@ -601,7 +633,7 @@ function Contenido({ formValues, setFormValues }) {
       </Grid>
 
        <ListaDeCapitulos />
-
+       
       <Grid item xs={12} sx={{ }}>
         <Grid container item spacing={2}>
           <Grid item xs={9}>
@@ -753,9 +785,10 @@ function TempFiller({ formValues, setFormValues }) {
     </Box>
   );
 }
-const CreateCourseForm = () => {
-  
 
+
+const EditCourseForm = ({cursoId, cursoName }) => {
+  
   const [formValues, setFormValues] = useState({
     titulo: "",
     subtitulo: "",
@@ -777,40 +810,55 @@ const CreateCourseForm = () => {
   });
 
   const [ShowSection, setShowSection] = useState(
-    <InformacionBasica formValues={formValues} setFormValues={setFormValues} />
+    // <InformacionBasica formValues={formValues} setFormValues={setFormValues} />
   );
 
-  const StatesCommented = () => {
-    // const [titulo, setTitulo] = useState("");
-    // const [subtitulo, setSubtitulo] = useState("");
-    // const [descripcion, setDescripcion] = useState("");
-    // const [contenido, setContenido] = useState("");
-    // const [creditos, setCreditos] = useState("");
-    // const [horario, setHorario] = useState("");
-    // const [examenes, setExamenes] = useState("");
-    // const [tests, setTests] = useState("");
-    // const [instructor, setInstructor] = useState("");
-    // const [fechaDePublicacion, setFechaDePublicacion] = useState(Date.now);
-    // const [alumnos, setAlumnos] = useState("");
-    // // Estados nuevos que se deben incluir en el modelo de <<Curso>>
-    // const [categoria, setCategoria] = useState("");
-    // const [subcategoria, setSubcategoria] = useState("");
-    // const [idiomas, setIdiomas] = useState("");
-    // const [objetivos, setObjetivos] = useState("");
-    // const [nivelDeInstruccion, setNivelDeInstruccion] = useState("");
-    // const [requisitos, setRequisitos] = useState("");
-    // const [instrucciones, setInstrucciones] = useState("");
-    // const [capitulos, setCapitulos] = useState("");
-    // const [lecciones, setLecciones] = useState("");
-    // const [añadir, setAñadir] = useState("");
-    // const [evaluaciones, setEvaluaciones] = useState("");
-    // const [asignaciones, setAsignaciones] = useState("");
-    // // const [videoconferencias, setVideoconferencias] = useState("");
-    // const [ajustes, setAjustes] = useState("");
-    // const [calificaciones, setCalificaciones] = useState("");
-    // const [encuestas, setEncuestas] = useState("");
-    // const [videoconferencias, setVideoconferencias] = useState("");
-  };
+  useEffect(() => {
+    // const cursoId = "tu_curso_id"; // Obtén el cursoId de las props o parámetros de ruta
+    obtenerValues(cursoId);
+    setShowSection(
+      <InformacionBasica formValues={formValues} setFormValues={setFormValues} />
+    );
+  }, []);
+
+  if (cursoId) {
+    console.log("Id: ", cursoId);
+  }
+  const obtenerValues = async (cursoId ) => {
+    // const entries = Object.entries(formValues);
+    const jsonString = JSON.stringify(formValues, null, 2);
+    // console.log("Form Values: " + entries);
+
+    console.log("Form Values: " + jsonString);
+    console.log("Curso ID:" + cursoId);
+    console.log("http://localhost:3001/api/cursos/"+cursoId);
+      try {
+        console.log("Obteniendo curso...");
+        const response = await axios.get("http://localhost:3001/api/cursos/"+cursoId)
+        console.log(response.data); 
+        alert("Response Data >: " + response.data._id);
+    
+        console.log("Response Data" + response.data);
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          ...response.data,
+        }));
+
+        const jsonString = JSON.stringify(formValues, null, 2);
+        console.log("Form Values 2: " + jsonString);
+
+
+        return response.data;
+        
+
+      } catch (err) {
+        console.log("Que fue lo que paso ???");
+        
+        console.log(err);
+        
+      }
+    };
+
 
   const guardarCurso = async (
     event,
@@ -915,7 +963,7 @@ const CreateCourseForm = () => {
               }}
             >
             <Paper>
-              <SidebarCrearCurso
+              <SidebarEditarCurso
                 onSectionChange={handleSectionChange}
                 formValues={formValues}
                 setFormValues={setFormValues}
@@ -928,7 +976,7 @@ const CreateCourseForm = () => {
             // sx={{width: { sx: "100%", sm: "calc(100% - 250px)" }}}
             >
             <Typography variant="h63" sx={{ fontWeight: "Bold" }}>
-              Nuevo curso
+              Editando curso: {cursoName} ID: {cursoId}
             </Typography>
             <Button
               fullWidth
@@ -940,7 +988,7 @@ const CreateCourseForm = () => {
                   formValues,
                   setFormValues,
                   ShowSection,
-                  StatesCommented
+                  // StatesCommented
                 )
               }          >
               Guardar curso
@@ -965,4 +1013,4 @@ const CreateCourseForm = () => {
   );
 };
 
-export default CreateCourseForm;
+export default EditCourseForm;

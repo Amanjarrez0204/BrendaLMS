@@ -47,7 +47,8 @@ import { checkToken } from "../App";
 
 
 const Dashboard = () => {
-  useEffect(() => {
+   const navigate = useNavigate();
+   useEffect(() => {
     checkToken();
   
   }, [])
@@ -55,7 +56,42 @@ const Dashboard = () => {
   
   const [value, setValue] = useState(1);
 
+  const handleCursosVerticalMenu =  (event, option, curso) => {
+  
 
+    console.log("Event: ", event, "Option: ", option, "Curso: ", curso);
+
+    if (option.label === "View Course"
+    ) {
+    console.log("Ver curso");
+    // handleEditCurso(option, curso);
+  }
+    if (option.label === "Edit Course"
+      ) {
+      console.log("Editando curso");
+      handleEditCurso(option, curso);
+    }
+    if (option.label === 2) {
+      console.log("Delete course");
+      deleteCurso(curso._id);
+    }
+
+   
+    console.log("Event Name: ", event.name, "Event Target: ", event.target);
+   console.log("What is curso: ", curso._id)
+   console.log("What is curso: ", option.label)
+
+
+     };
+
+     const handleEditCurso = (
+      option,
+      curso
+     ) => {
+
+      navigate("/editar-curso", { state: { cursoId: curso._id, cursoName: curso.titulo } });
+    };
+      
   const deleteCurso = async (cursoID) => {
     console.log(cursoID._id)
     try {
@@ -169,7 +205,7 @@ const Dashboard = () => {
             // <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
              <MenuItem key={option} 
              selected={option === 'Pyxis'}
-             onClick={() => deleteCurso(curso)}>
+             onClick={(e) => handleCursosVerticalMenu(e, option, curso)}>
   
                       
               {option.icon} {option.label}
