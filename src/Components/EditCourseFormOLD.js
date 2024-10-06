@@ -32,13 +32,6 @@ import SendIcon from "@mui/icons-material/Send";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-
-import { styled } from "@mui/material/styles";
-import { useTheme } from "@mui/material/styles";
-
-
 import JoditEditor from "jodit-react";
 import "quill/dist/quill.snow.css";
 import "react-quill/dist/quill.snow.css";
@@ -173,12 +166,12 @@ function SidebarEditarCurso({ onSectionChange, formValues, setFormValues }) {
   );
 }
 function InformacionBasica({ cursoId, formValues, setFormValues }) {
-  // const [titulo, setTitulo] = useState("");
-  // const [subtitulo, setSubtitulo] = useState("");
-  // const [descripcion, setDescripcion] = useState("");
-  // const [categoria, setCategoria] = useState("");
-  // const [subcategoria, setSubcategoria] = useState("");
-  // const [lenguaje, setLenguaje] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [subtitulo, setSubtitulo] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [subcategoria, setSubcategoria] = useState("");
+  const [lenguaje, setLenguaje] = useState("");
 
   // setTitulo(
   //   formValues.titulo || ""
@@ -188,90 +181,73 @@ function InformacionBasica({ cursoId, formValues, setFormValues }) {
   // )
 
   // Sincroniza estados locales cuando formValues cambie
-  // useEffect(() => {
-  //   setTitulo(formValues.titulo || "");
-  //   setSubtitulo(formValues.subtitulo || "");
-  //   setDescripcion(formValues.descripcion || "");
-  //   setCategoria(formValues.categoria || "");
-  //   setSubcategoria(formValues.subcategoria || "");
-  //   setLenguaje(formValues.lenguaje || "");
-  // }, [formValues]);
+  useEffect(() => {
+    setTitulo(formValues.titulo || "");
+    setSubtitulo(formValues.subtitulo || "");
+    setDescripcion(formValues.descripcion || "");
+    setCategoria(formValues.categoria || "");
+    setSubcategoria(formValues.subcategoria || "");
+    setLenguaje(formValues.lenguaje || "");
+  }, [formValues]);
 
-  // // Actualiza formValues cuando los estados locales cambien
-  // useEffect(() => {
-  //   setFormValues((prevValues) => ({
-  //     ...prevValues,
-  //     titulo,
-  //     subtitulo,
-  //     descripcion,
-  //     categoria,
-  //     subcategoria,
-  //     lenguaje,
-  //   }));
-  // }, [titulo, subtitulo, descripcion, categoria, subcategoria, lenguaje]);
-console.log("Informacion Básica curso ID > ", cursoId)
-console.log("Informacion Básica formValues > ", formValues)
-// console.log("Informacion Básica setFormValues > ", setFormValues)
-
-  const guardarCurso = async () => {
-    try {
-      const response = await axios.put(`http://localhost:3001/api/cursos/${cursoId}`, {
-        titulo: formValues.titulo,
-        subtitulo: formValues.subtitulo,
-        descripcion: formValues.descripcion,
-        categoria: formValues.categoria,
-        subcategoria: formValues.subcategoria,
-        lenguaje: formValues.lenguaje,
-      });
-      alert("Curso guardado con éxito");
-      console.log(response.data);
-    } catch (err) {
-      console.error("Error al guardar el curso:", err);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log("Name: "+ name + " Value: " + value);
-
+  // Actualiza formValues cuando los estados locales cambien
+  useEffect(() => {
     setFormValues((prevValues) => ({
       ...prevValues,
-      [name]: value,
+      titulo,
+      subtitulo,
+      descripcion,
+      categoria,
+      subcategoria,
+      lenguaje,
     }));
-  };
+  }, [titulo, subtitulo, descripcion, categoria, subcategoria, lenguaje]);
 
-  //   try {
-  //     const response = await axios.put(
-  //       "http://localhost:3001/api/cursos/" + cursoId,
-  //       {
-  //         titulo,
-  //         subtitulo,
-  //         descripcion,
-  //         categoria,
-  //         subcategoria,
-  //         lenguaje,
-  //       }
-  //     );
-  //     alert("Curso registrado con éxito");
-  //     console.log(response.data);
-  //   } catch (err) {
-  //     console.log("Que fue lo que paso ???");
-  //     console.log(err);
-  //   }
-  // };
+  const guardarCurso = async ({ cursoId }) => {
+    // const { titulo, subtitulo, descripcion, categoria, subcategoria, lenguaje } = formValues;
+    console.log(
+      "Guardando curso: ",
+      titulo,
+      subtitulo,
+      descripcion,
+      categoria,
+      subcategoria,
+      lenguaje,
+      "Curso ID: ",
+      cursoId
+    );
+
+    try {
+      const response = await axios.put(
+        "http://localhost:3001/api/cursos/" + cursoId,
+        {
+          titulo,
+          subtitulo,
+          descripcion,
+          categoria,
+          subcategoria,
+          lenguaje,
+        }
+      );
+      alert("Curso registrado con éxito");
+      console.log(response.data);
+    } catch (err) {
+      console.log("Que fue lo que paso ???");
+      console.log(err);
+    }
+  };
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        {/* <Button
+        <Button
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          // onClick={(event) => guardarCurso()}
-          onClick={guardarCurso}
+          onClick={(event) => guardarCurso()}
         >
           Guardar curso 1 {cursoId}
-        </Button> */}
+        </Button>
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           Información Básica
         </Typography>
@@ -284,8 +260,8 @@ console.log("Informacion Básica formValues > ", formValues)
           id="titulo"
           label="Título del curso"
           name="titulo"
-          value={formValues.titulo}
-          onChange={handleChange}
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
         />
         <TextField
           margin="normal"
@@ -294,19 +270,19 @@ console.log("Informacion Básica formValues > ", formValues)
           id="subtitulo"
           label="Subtítulo del curso"
           name="subtitulo"
-          value={formValues.subtitulo}
-          onChange={handleChange}
+          value={subtitulo}
+          onChange={(e) => setSubtitulo(e.target.value)}
         />
-        {/* <TextField
+        <TextField
           margin="normal"
           required
           fullWidth
           id="descripcion"
           label="Descripción del curso"
           name="descripcion"
-          value={formValues.descripcion}
-          onChange={handleChange}
-        /> */}
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+        />
       </Grid>
       <Grid item container spacing={2}>
         <Grid item xs={6}>
@@ -316,15 +292,14 @@ console.log("Informacion Básica formValues > ", formValues)
               labelId="categoria-label"
               id="categoria"
               // value={formValues.categoria || ""}
-              name="categoria"
-              value={formValues.categoria}
+              value={categoria}
               label="Categoría del curso"
-              onChange={handleChange}
+              onChange={(e) => setCategoria(e.target.value)}
             >
               {["Categoria 1", "Categoria 2", "Categoria 3"].map(
                 (categoria) => (
                   <MenuItem key={categoria} value={categoria}>
-                    {[categoria]}
+                    {categoria}
                   </MenuItem>
                 )
               )}
@@ -337,10 +312,9 @@ console.log("Informacion Básica formValues > ", formValues)
             <Select
               labelId="subCategoria-label"
               id="sub-categoria"
-              value={formValues.subcategoria}
-              name="subcategoria"
+              value={subcategoria}
               label="Subcategoría"
-              onChange={handleChange}
+              onChange={(e) => setSubcategoria(e.target.value)}
             >
               {["Sub Categoria 1", "Sub Categoria 2", "Sub Categoria 3"].map(
                 (subCategoria) => (
@@ -358,10 +332,9 @@ console.log("Informacion Básica formValues > ", formValues)
             <Select
               labelId="Lenguaje-label"
               id="lenguaje"
-              name="lenguaje"
-              value={formValues.lenguaje}
+              value={lenguaje}
               label="Lenguaje"
-              onChange={handleChange}
+              onChange={(e) => setLenguaje(e.target.value)}
             >
               {["Lenguaje 1", "Lenguaje 2", "Lenguaje 3"].map((lenguaje) => (
                 <MenuItem key={lenguaje} value={lenguaje}>
@@ -377,105 +350,29 @@ console.log("Informacion Básica formValues > ", formValues)
 }
 
 function Detalles({ formValues, setFormValues }) {
+  const [descripcion, setDescripcion] = useState("");
+  const [objetivos, setObjetivos] = useState("");
+  const [nivelDeInstruccion, setNivelDeInstruccion] = useState("");
+  const [requisitos, setRequisitos] = useState("");
+  const [instrucciones, setInstrucciones] = useState("");
 
-  // console.log("Detalles curso ID > ", cursoId)
-  console.log("Detalles formValues > ", formValues)
-
-  const [objetivos, setObjetivos] = useState([]);
-  const [objetivosList, setObjetivosList] = useState([]);
-
-  const handleJoditChange = (newContent) => {
-    console.log("New Content: " + newContent);
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      descripcion: newContent,
-    }));
+  // const handleUpdate = (event, field) => {
+  //   let value;
+  //   if (event && event.target) {
+  //     value = event.target.value;
+  //   } else {
+  //     value = event;
+  //   }
+  //   setFormValues({
+  //     ...formValues,
+  //     [field]: value
+  //   });
+  // };
+  const editor = useRef(null);
+  const config = {
+    readonly: false,
+    height: 400,
   };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log("Name: "+ name + " Value: " + value);
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-
-    
-  };
-  const handleObjetivosChange = (e, index) => {
-    const { name, value } = e.target;
-    console.log("Name: "+ name + " Value: " + value);
-    
-    const newObjetivos = [...objetivos]
-    newObjetivos[index] = value;
-    setObjetivos(newObjetivos);
-
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      objetivos: newObjetivos,
-    }));
-
-  };
-
-  const handleAddObjetivo = (event) => {
-        // event.preventDefault();
-      
-        console.log("Añadiendo Objetivo..." );
-        const objetivo = formValues.newObjetivo.trim();
-        
-        if (objetivo === "") {
-          // Opcional: Manejar el caso de entrada vacía, por ejemplo, mostrar una alerta
-          alert("Por favor, ingresa un objetivo válido.");
-          return;
-        }
-        console.log("Objetivo capturado:", objetivo); // Verificar en la consola
-        setObjetivosList(prevList => [...prevList, objetivo]);
-
-        // Limpiar el campo de entrada
-        setFormValues(prevValues => ({
-          ...prevValues,
-          newObjetivo: "",
-        }));
-
-        console.log("Añadiendo Objetivo > " + JSON.stringify(event.target.value, null, 2) + " " + event.target.value );
-        console.log(" Objetivos antes: ", objetivos);
-
-
-        setObjetivos([...objetivos, ""]);
-
-        setFormValues(`objetivos: [${objetivo}]`)
-        // setFormValues(
-        //   (prevValues) => ({
-        //     ...prevValues,
-        //     objetivos: objetivos,
-        //   })
-        setObjetivosList(objetivo)
-        console.log(" Form Values: ", formValues);
-
-        console.log(" Objetivos despues: ", objetivos);
-        console.log("Objetivo capturado:", objetivo); // Verificar en la consola
-    };
-
-  const handleDeleteObjetivo = (index) => {
-    console.log("Eliminando Objetivo");
-    const newObjetivos = objetivos.filter((_, i) => i !== index);
-    setObjetivos(newObjetivos);
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      objetivos: newObjetivos,
-    }));
-  
-  console.log(" Objetivos despues: ", objetivos);
-  console.log(" Objetivos formValues: ", formValues.objetivos);
-
-  return objetivos;
-};
-
-const editor = useRef(null);
-const config = {
-  readonly: false,
-  height: 400,
-};
 
   return (
     <Grid container>
@@ -489,61 +386,17 @@ const config = {
           required
           fullWidth
           id="descripcion"
-          label="Descipción del curso"
+          label="Descripción del curso"
           name="descripcion"
-          placeholder="Escribe aquí la descripcion del curso"
+          placeholder="Descripcion del curso"
           ref={editor}
           config={config}
-          value={formValues.descripcion}
-          onBlur={handleJoditChange}
-          // onChange={(newContent) => {
-          //   setFormValues((prevValues) => ({
-          //     ...prevValues,
-          //     descripcion: newContent,
-          //   }));
-          // }}
-          
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
         />
       </Grid>
       <Grid item xs={12}>
-      <Typography variant="h6" sx={{ fontWeight: "Bold",  mt: 2, mb: -1  }}>
-
-            Objetivos
-          </Typography>
-          <List component="ul" aria-label="objetivos">
-            <Grid container >
-            {objetivos.map((objetivo, index) => (
-              <Grid item xs={6}  key={index}>
-              <ListItemButton  > 
-                {/* <ListItemText primary={objetivo} /> */}
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id={`objetivo-${index}`}
-                  // key={index}
-                  label="Escribe un objetivo"
-                  name="objetivos"
-                  autoComplete="Escribe un objetivo"
-                  value={objetivo}
-                  onChange={(e) => handleObjetivosChange(e, index)}
-                />
-                 
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => 
-                  handleDeleteObjetivo(index)
-                  }>
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemButton>
-              </Grid>
-            ))}
-            </Grid>
-          </List>
         <Box sx={{ display: "flex" }}>
-          
           <TextField
             margin="normal"
             required
@@ -552,27 +405,21 @@ const config = {
             label="Escribe un objetivo"
             name="objetivos"
             autoComplete="Escribe un objetivo"
-            // value={objetivosList}
-            onChange={(e) => setFormValues((prevValues) => ({
-              ...prevValues,
-              newObjetivo: e.target.value,
-            }))}
-            value={formValues.newObjetivo}
-            // onChange={(e) => setObjetivosList(e.target.value)}
-            //  onChange={(e) => setNombreCapitulo(e.target.value)}
-              
+            value={objetivos}
+            onChange={(e) => setObjetivos(e.target.value)}
           />
 
           <Button
-            id="objetivos"
-
             variant="contained"
-            sx={{ml: 2, mt: 1.5, mb: 1,
+            sx={{
+              ml: 2,
+              mt: 1.5,
+              mb: 1,
               width: {
                 xs: 100,
               },
             }}
-            onClick={handleAddObjetivo}
+            onClick={"handleAddObjetivo"}
           >
             Añadir
           </Button>
@@ -586,9 +433,9 @@ const config = {
           <Select
             labelId="nivelDeInstruccion-label"
             id="nivelDeInstruccion"
-            value={formValues.nivelDeInstruccion}
+            value={nivelDeInstruccion}
             label="Nivel de instrucción"
-            onChange={handleChange}
+            onChange={(e) => setNivelDeInstruccion(e.target.value)}
             autoComplete="Nivel de instrucción"
           >
             {["Introductorio", "Intermedio", "Avanzado", "No aplica"].map(
@@ -611,8 +458,8 @@ const config = {
             label="Escribe un requisito para el curso"
             name="requisitos"
             autoComplete="Escribe un requisito"
-            value={formValues.requisitos}
-            onChange={handleChange}
+            value={requisitos}
+            onChange={(e) => setRequisitos(e.target.value)}
           />
 
           <Button
@@ -640,16 +487,8 @@ const config = {
           placeholder="Instrucciones del curso"
           ref={editor}
           config={config}
-          value={formValues.instrucciones}
-          onChange={            
-            // (e) => setInstrucciones(e.target.value)
-                    (newContent) => {
-                      setFormValues((prevValues) => ({
-                        ...prevValues,
-                        descripcion: newContent,
-                      }));
-                    }
-                  }
+          value={instrucciones}
+          onChange={(e) => setInstrucciones(e.target.value)}
           // onBlur={(e) => handleUpdate(e, "instrucciones")}
         />
       </Grid>
@@ -958,259 +797,106 @@ function Contenido({ formValues, setFormValues }) {
   );
 }
 
-// function TempFiller({ formValues, setFormValues }) {
-//   return (
-//     <Box>
-//       Hello World
-//       {/* {formValues} */}
-//       <br />
-//       {`${formValues.fechaDePublicacion}`}
-//       {console.log("Tempfiller: ", formValues)}
-//     </Box>
-//   );
-// }
+function TempFiller({ formValues, setFormValues }) {
+  return (
+    <Box>
+      Hello World
+      {/* {formValues} */}
+      <br />
+      {`${formValues.fechaDePublicacion}`}
+      {console.log("Tempfiller: ", formValues)}
+    </Box>
+  );
+}
 
 const EditCourseForm = ({ cursoId, cursoName }) => {
-  // const [formValues, setFormValues] = useState({
-  //   titulo: "",
-  //   subtitulo: "",
-  //   descripcion: "",
-  //   requisitos: "",
-  //   categoria: "",
-  //   subcategoria: "",
-  //   lenguaje: "",
-  //   contenido: "",
-  //   creditos: "",
-  //   horario: "",
-  //   examenes: "",
-  //   tests: "",
-  //   instructor: "",
-  //   fechaDePublicacion: Date.now(),
-  //   alumnos: "",
-  //   objetivos: "",
-  //   nivelDeInstruccion: "",
-  // });
   const [formValues, setFormValues] = useState({
     titulo: "",
-    subtitulo: "Subtítulo no asignado",
-    
-    categoria: [],
-    subcategoria: [],
-    lenguaje: [],
-    
+    subtitulo: "",
     descripcion: "",
-    objetivos: [],
-    nivel: [],
-    requisitos: [],
-    instrucciones: "",
-
-    capitulos: [
-      {
-        IDcapitulo: 0,
-        nombre: "",
-        lecciones: [
-          {
-            IDleccion: 0,
-            titulo: "",
-            descripcion: "",
-            archivoLeccion: [],
-            archivosAdjuntos: [
-              {
-                IDarchivo: 0,
-                nombreArchivo: "",
-                documentArchivo: null
-              }
-            ],
-            leccionGratis: false,
-            ajustes: {
-              completacion: {
-                manual: false,
-                alAbrir: false,
-                tiempo: 0
-              }
-            }
-          }
-        ]
-      }
-    ],
-    encuestas: [
-      {
-        IDencuesta: 0
-      }
-    ],
-    videoconferencias: [
-      {
-        IDvideoconferencia: 0
-      }
-    ],
-    asignaciones: [
-      {
-        IDasignacion: 0
-      }
-    ],
-    evaluaciones: [
-      {
-        IDevaluacion: 0
-      }
-    ]
+    requisitos: "",
+    categoria: "",
+    subcategoria: "",
+    idiomas: "",
+    contenido: "",
+    creditos: "",
+    horario: "",
+    examenes: "",
+    tests: "",
+    instructor: "",
+    fechaDePublicacion: Date.now(),
+    alumnos: "",
+    objetivos: "",
+    nivelDeInstruccion: "",
   });
-  // const [ShowSection, setShowSection] = useState();
+
+  const [ShowSection, setShowSection] = useState();
   // <InformacionBasica formValues={formValues} setFormValues={setFormValues} />
 
-  // if (cursoId) {
-  //   console.log("Id: ", cursoId);
-  // }
-  const [currentSection, setCurrentSection] = useState('informacionBasica'); // Estado para la sección actual
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (cursoId) {
-      obtenerValues(cursoId);
-      // console.log("Form VAlues:", formValues)
-    }
-  }, [cursoId]);
-
+  if (cursoId) {
+    console.log("Id: ", cursoId);
+  }
 
   const obtenerValues = async (cursoId) => {
-    
-    // const jsonString = JSON.stringify(formValues, null, 2);
-    // console.log("Form Values: " + jsonString);
-    // console.log("Curso ID:" + cursoId);
+    // const entries = Object.entries(formValues);
+    const jsonString = JSON.stringify(formValues, null, 2);
+    // console.log("Form Values: " + entries);
 
-
+    console.log("Form Values: " + jsonString);
+    console.log("Curso ID:" + cursoId);
     console.log("http://localhost:3001/api/cursos/" + cursoId);
-
     try {
       console.log("Obteniendo curso...");
-      const response = await axios.get("http://localhost:3001/api/cursos/" + cursoId);
+      const response = await axios.get(
+        "http://localhost:3001/api/cursos/" + cursoId
+      );
+      console.log(response.data);
+      alert("Response Data >: " + response.data._id);
 
-      // console.log(response.data);
-      // alert("Response Data >: " + response.data._id);
-      console.log("Response Data > " + response.data);
+      console.log("Response Data" + response.data);
       setFormValues((prevFormValues) => ({
         ...prevFormValues,
         ...response.data,
       }));
 
-      // const jsonString = JSON.stringify(formValues, null, 2);
-      // console.log("Form Values 2: " + jsonString);
-      // console.log("Form VAlues >: ", formValues)
+      const jsonString = JSON.stringify(formValues, null, 2);
+      console.log("Form Values 2: " + jsonString);
 
       return response.data;
-
-     
-
     } catch (err) {
-      console.log("Error al obtener el curso:", err);
+      console.log("Que fue lo que paso ???");
+
       console.log(err);
     }
   };
 
-  // const guardarCurso = async (
-  //   event,
-  //   formValuesDraft,
-  //   setFormValuesDraft,
-  //   section,
-  //   statesCommented
-  // ) => {
-  //   event.preventDefault(); // Prevent default form submission behavior
-  //   console.log("evento: ", event);
-  //   console.log("name: ", section.titulo);
-  //   // console.log("name: ", titulo);
-  //   console.log("Section: ", section);
-  //   console.log("Draft", formValuesDraft);
-  //   console.log("Form Values Draft: ", formValues);
-  //   console.log("States Commented: ", statesCommented);
-  // };
-
-  // const navigate = useNavigate();
-
-  const guardarCurso = async () => {
-    try {
-      const response = await axios.put(`http://localhost:3001/api/cursos/${cursoId}`, {
-        titulo: formValues.titulo,
-        subtitulo: formValues.subtitulo,       
-        categoria: formValues.categoria,
-        subcategoria: formValues.subcategoria,
-        lenguaje: formValues.lenguaje,
-
-        descripcion: formValues.descripcion,
-        objetivos: formValues.objetivos,
-        nivel: [],
-        requisitos: [],
-        instrucciones: "",
-
-        capitulos: [
-          {
-            IDcapitulo: 0,
-            nombre: "",
-            lecciones: [
-              {
-                IDleccion: 0,
-                titulo: "",
-                descripcion: "",
-                archivoLeccion: [],
-                archivosAdjuntos: [
-                  {
-                    IDarchivo: 0,
-                    nombreArchivo: "",
-                    documentArchivo: null
-                  }
-                ],
-                leccionGratis: false,
-                ajustes: {
-                  completacion: {
-                    manual: false,
-                    alAbrir: false,
-                    tiempo: 0
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        encuestas: [
-          {
-            IDencuesta: 0
-          }
-        ],
-        videoconferencias: [
-          {
-            IDvideoconferencia: 0
-          }
-        ],
-        asignaciones: [
-          {
-            IDasignacion: 0
-          }
-        ],
-        evaluaciones: [
-          {
-            IDevaluacion: 0
-          }
-        ]
-
-
-
-
-
-      });
-      alert("Curso registrado con éxito");
-      console.log(response.data);
-    } catch (err) {
-      console.error("Error al guardar el curso:", err);
-    }
+  const guardarCurso = async (
+    event,
+    formValuesDraft,
+    setFormValuesDraft,
+    section,
+    statesCommented
+  ) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    console.log("evento: ", event);
+    console.log("name: ", section.titulo);
+    // console.log("name: ", titulo);
+    console.log("Section: ", section);
+    console.log("Draft", formValuesDraft);
+    console.log("Form Values Draft: ", formValues);
+    console.log("States Commented: ", statesCommented);
   };
 
-  // const handleSectionChange = (section) => {
-  //   setShowSection(section);
-  // };
+  const navigate = useNavigate();
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log("inHandleSubmit: ", formValues);
-  // };
+  const handleSectionChange = (section) => {
+    setShowSection(section);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("inHandleSubmit: ", formValues);
+  };
 
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -1222,7 +908,7 @@ const EditCourseForm = ({ cursoId, cursoName }) => {
         descripcion: formValues.descripcion,
         categoria: formValues.categoria,
         subcategoria: formValues.subcategoria,
-        lenguaje: formValues.lenguaje,
+        idiomas: formValues.idiomas,
         // titulo,
         // subtitulo,
         // descripcion,
@@ -1246,60 +932,46 @@ const EditCourseForm = ({ cursoId, cursoName }) => {
       // alert(`Error al registrar curso ${titulo}`);
     }
   };
-
-   // Función para renderizar la sección actual
-   const renderSection = () => {
-    switch (currentSection) {
-      case 'informacionBasica':
-        return <InformacionBasica formValues={formValues} setFormValues={setFormValues} cursoId={cursoId} />;
-      case 'detalles':
-        return <Detalles formValues={formValues} setFormValues={setFormValues} />;
-      case 'contenido':
-        return <Contenido formValues={formValues} setFormValues={setFormValues} />;
-      // case 'evaluaciones':
-      //   return <Evaluaciones formValues={formValues} setFormValues={setFormValues} />;
-      // Agrega más casos según sea necesario
-      default:
-        return <InformacionBasica formValues={formValues} setFormValues={setFormValues} cursoId={cursoId} />;
-    }
-  };
-  
-  // useEffect(() => {
-  //   // const cursoId = "tu_curso_id"; // Obtén el cursoId de las props o parámetros de ruta
-  //   obtenerValues(cursoId);
-
-  //   // setShowSection(
-  //   //   <InformacionBasica formValues={formValues} setFormValues={setFormValues} />
-  //   // );
-  // }, []);
-
-  // useEffect(
-  //   (showSection) => {
-  //     console.log("Check informacion Basica");
-
-  //     // if (ShowSection !== undefined && ShowSection.type.name) {
-  //     console.log(ShowSection);
-  //     console.log(obtenerValues);
-  //     console.log("Informacion First input value: ", InformacionBasica);
-
-  //     if (ShowSection === undefined) {
-  //       //  console.log(
-  //       //   "Rendering Informacion Básica: ", formValues,
-  //       //   "Informacion Basica has been rendered")
-
-  //       //  } else {
-  //       setShowSection(
-  //         <InformacionBasica
-  //           formValues={formValues}
-  //           setFormValues={setFormValues}
-  //         />
-  //       );
-
-  //       // }
-  //     }
-  //   },
-  //   [obtenerValues]
+  // setShowSection(
+  //   <InformacionBasica formValues={formValues} setFormValues={setFormValues} />
   // );
+  // console.log("ShowSection 2:", ShowSection);
+  useEffect(() => {
+    // const cursoId = "tu_curso_id"; // Obtén el cursoId de las props o parámetros de ruta
+    obtenerValues(cursoId);
+
+    // setShowSection(
+    //   <InformacionBasica formValues={formValues} setFormValues={setFormValues} />
+    // );
+  }, []);
+
+  useEffect(
+    (showSection) => {
+      console.log("Check informacion Basica");
+
+      // if (ShowSection !== undefined && ShowSection.type.name) {
+      console.log(ShowSection);
+      console.log(obtenerValues);
+      console.log("Informacion First input value: ", InformacionBasica);
+
+      if (ShowSection === undefined) {
+        //  console.log(
+        //   "Rendering Informacion Básica: ", formValues,
+        //   "Informacion Basica has been rendered")
+
+        //  } else {
+        setShowSection(
+          <InformacionBasica
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />
+        );
+
+        // }
+      }
+    },
+    [obtenerValues]
+  );
 
   return (
     <Box component="form" sx={{}}>
@@ -1321,9 +993,9 @@ const EditCourseForm = ({ cursoId, cursoName }) => {
         >
           <Paper>
             <SidebarEditarCurso
-              onSectionChange={setCurrentSection}
-              // formValues={formValues}
-              // setFormValues={setFormValues}
+              onSectionChange={handleSectionChange}
+              formValues={formValues}
+              setFormValues={setFormValues}
             />
           </Paper>
         </Grid>
@@ -1343,22 +1015,30 @@ const EditCourseForm = ({ cursoId, cursoName }) => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={guardarCurso}
+            onClick={(event) =>
+              guardarCurso(
+                event,
+                formValues,
+                setFormValues,
+                ShowSection
+                // StatesCommented
+              )
+            }
           >
             Guardar curso
           </Button>
 
-          {  renderSection() }
+          {ShowSection}
         </Grid>
       </Grid>
-      {/* <Button
+      <Button
         fullWidth
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
         onClick={handleRegister}
       >
         Crear nuevo curso
-      </Button> */}
+      </Button>
     </Box>
   );
 };
