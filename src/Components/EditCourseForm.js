@@ -383,6 +383,25 @@ function Detalles({ formValues, setFormValues }) {
 
   const [objetivos, setObjetivos] = useState([]);
   const [objetivosList, setObjetivosList] = useState([]);
+  const [newObjetivo, setNewObjetivo] = useState('');
+
+  const handleObjetivosChange = (e, index) => {
+    const updatedObjetivos = [...objetivos];
+    updatedObjetivos[index] = e.target.value;
+    setObjetivos(updatedObjetivos);
+  };
+
+  const handleDeleteObjetivo = (index) => {
+    const updatedObjetivos = objetivos.filter((_, i) => i !== index);
+    setObjetivos(updatedObjetivos);
+  };
+
+  const handleAddObjetivo = () => {
+    if (newObjetivo.trim() !== '') {
+      setObjetivos([...objetivos, newObjetivo]);
+      setNewObjetivo('');
+    }
+  };
 
   const handleJoditChange = (newContent) => {
     console.log("New Content: " + newContent);
@@ -399,77 +418,78 @@ function Detalles({ formValues, setFormValues }) {
       ...prevValues,
       [name]: value,
     }));
-
-    
-  };
-  const handleObjetivosChange = (e, index) => {
-    const { name, value } = e.target;
-    console.log("Name: "+ name + " Value: " + value);
-    
-    const newObjetivos = [...objetivos]
-    newObjetivos[index] = value;
-    setObjetivos(newObjetivos);
-
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      objetivos: newObjetivos,
-    }));
-
   };
 
-  const handleAddObjetivo = (event) => {
-        // event.preventDefault();
-      
-        console.log("Añadiendo Objetivo..." );
-        const objetivo = formValues.newObjetivo.trim();
-        
-        if (objetivo === "") {
-          // Opcional: Manejar el caso de entrada vacía, por ejemplo, mostrar una alerta
-          alert("Por favor, ingresa un objetivo válido.");
-          return;
-        }
-        console.log("Objetivo capturado:", objetivo); // Verificar en la consola
-        setObjetivosList(prevList => [...prevList, objetivo]);
-
-        // Limpiar el campo de entrada
-        setFormValues(prevValues => ({
-          ...prevValues,
-          newObjetivo: "",
-        }));
-
-        console.log("Añadiendo Objetivo > " + JSON.stringify(event.target.value, null, 2) + " " + event.target.value );
-        console.log(" Objetivos antes: ", objetivos);
-
-
-        setObjetivos([...objetivos, ""]);
-
-        setFormValues(`objetivos: [${objetivo}]`)
-        // setFormValues(
-        //   (prevValues) => ({
-        //     ...prevValues,
-        //     objetivos: objetivos,
-        //   })
-        setObjetivosList(objetivo)
-        console.log(" Form Values: ", formValues);
-
-        console.log(" Objetivos despues: ", objetivos);
-        console.log("Objetivo capturado:", objetivo); // Verificar en la consola
-    };
-
-  const handleDeleteObjetivo = (index) => {
-    console.log("Eliminando Objetivo");
-    const newObjetivos = objetivos.filter((_, i) => i !== index);
-    setObjetivos(newObjetivos);
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      objetivos: newObjetivos,
-    }));
   
-  console.log(" Objetivos despues: ", objetivos);
-  console.log(" Objetivos formValues: ", formValues.objetivos);
+  // const handleObjetivosChange = (e, index) => {
+  //   const { name, value } = e.target;
+  //   console.log("Name: "+ name + " Value: " + value);
+    
+  //   const newObjetivos = [...objetivos]
+  //   newObjetivos[index] = value;
+  //   setObjetivos(newObjetivos);
 
-  return objetivos;
-};
+  //   setFormValues((prevValues) => ({
+  //     ...prevValues,
+  //     objetivos: newObjetivos,
+  //   }));
+
+  // };
+
+  // const handleAddObjetivo = (event) => {
+  //       // event.preventDefault();
+      
+  //       console.log("Añadiendo Objetivo..." );
+  //       console.log("Event tagret: " + event.target );
+  //       const objetivo = formValues.newObjetivo.trim();
+        
+  //       if (objetivo === "") {
+  //         // Opcional: Manejar el caso de entrada vacía, por ejemplo, mostrar una alerta
+  //         alert("Por favor, ingresa un objetivo válido.");
+  //         return;
+  //       }
+  //       console.log("Objetivo capturado:", objetivo); // Verificar en la consola
+  //       setObjetivosList(prevList => [...prevList, objetivo]);
+
+  //       // Limpiar el campo de entrada
+  //       setFormValues(prevValues => ({
+  //         ...prevValues,
+  //         newObjetivo: "",
+  //       }));
+
+  //       console.log("Añadiendo Objetivo > " + JSON.stringify(event.target.value, null, 2) + " " + event.target.value );
+  //       console.log(" Objetivos antes: ", objetivos);
+
+
+  //       setObjetivos([...objetivos, ""]);
+
+  //       setFormValues(`objetivos: [${objetivo}]`)
+  //       // setFormValues(
+  //       //   (prevValues) => ({
+  //       //     ...prevValues,
+  //       //     objetivos: objetivos,
+  //       //   })
+  //       setObjetivosList(objetivo)
+  //       console.log(" Form Values: ", formValues);
+
+  //       console.log(" Objetivos despues: ", objetivos);
+  //       console.log("Objetivo capturado:", objetivo); // Verificar en la consola
+  //   };
+
+//   const handleDeleteObjetivo = (index) => {
+//     console.log("Eliminando Objetivo");
+//     const newObjetivos = objetivos.filter((_, i) => i !== index);
+//     setObjetivos(newObjetivos);
+//     setFormValues((prevValues) => ({
+//       ...prevValues,
+//       objetivos: newObjetivos,
+//     }));
+  
+//   console.log(" Objetivos despues: ", objetivos);
+//   console.log(" Objetivos formValues: ", formValues.objetivos);
+
+//   return objetivos;
+// };
 
 const editor = useRef(null);
 const config = {
@@ -516,6 +536,7 @@ const config = {
               <Grid item xs={6}  key={index}>
               <ListItemButton  > 
                 {/* <ListItemText primary={objetivo} /> */}
+                
                 <TextField
                   margin="normal"
                   required
@@ -548,16 +569,18 @@ const config = {
             margin="normal"
             required
             fullWidth
-            id="objetivos"
+            id="objetivosAdd"
             label="Escribe un objetivo"
             name="objetivos"
             autoComplete="Escribe un objetivo"
+            value={newObjetivo}
+            onChange={(e) => setNewObjetivo(e.target.value)}
             // value={objetivosList}
-            onChange={(e) => setFormValues((prevValues) => ({
-              ...prevValues,
-              newObjetivo: e.target.value,
-            }))}
-            value={formValues.newObjetivo}
+            // onChange={(e) => setFormValues((prevValues) => ({
+            //   ...prevValues,
+            //   newObjetivo: e.target.value,
+            // }))}
+            // value={formValues.newObjetivo}
             // onChange={(e) => setObjetivosList(e.target.value)}
             //  onChange={(e) => setNombreCapitulo(e.target.value)}
               
